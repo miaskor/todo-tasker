@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link th:href="@{/css/header.css}" rel="stylesheet"
+        type="text/css" th:fragment="header_style"/>
+</head>
+<body>
+<div class="header_container" th:fragment="header">
+  <div class="header-bar">
+    <h1 class="logo">ToDo</h1>
+    <ul class="slider-menu">
+      <li onclick="this.firstChild.click()" th:if="${session.validate != null && session.validate == true}">
+        <a href="/profile" class="links">Profile</a>
+      </li>
+      <li onclick="this.firstChild.click()" th:if="${session.validate != null && session.validate == true}">
+        <a href="/inbox" class="links">Inbox</a>
+      </li>
+      <li onclick="this.firstChild.click()"
+          th:if="${session.validate != null && session.validate == true}">
+        <a href="/todo" id="home_btn" class="links">Home</a>
+      </li>
+      <li onclick="this.firstChild.click()" th:if="${session.about == null}">
+        <a href="/about" class="links">About</a>
+      </li>
+      <li onclick="this.firstChild.click()" th:if="${session.about != null}">
+        <a onClick="history.back()" class="links">Back</a>
+      </li>
+      <li onclick="this.firstChild.click()" th:if="${session.validate != null && session.validate == true}">
+        <a href="/logout" id="logout_btn" class="links">Logout</a>
+      </li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

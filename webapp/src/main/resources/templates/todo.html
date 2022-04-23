@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>TODO</title>
+  <meta charset="utf-8">
+  <link th:href="@{/css/todo.css}" rel="stylesheet"
+        type="text/css"/>
+  <link th:replace="/footer :: footer_style">
+  <link th:replace="/header :: header_style">
+</head>
+<body>
+<div th:replace="/header :: header"></div>
+<div class="above_footer">
+  <div class="change_list">
+    <input type="button" id="move_left" value="<-">
+    <input type="button" id="move_right" value="->">
+  </div>
+  <input type="date" id="date" name="calendar">
+</div>
+<div id="to_do_list" class="to_do_list">
+
+  <div th:replace="/footer :: footer"></div>
+</div>
+<script th:src="@{/js/cookies.js}"></script>
+<script th:src="@{/js/div_class.js}"></script>
+<script th:src="@{/js/input_class.js}"></script>
+<script th:src="@{/js/binary_search_date.js}"></script>
+<script th:src="@{/js/date_addition.js}"></script>
+<script th:src="@{/js/task_integration.js}"></script>
+<script th:src="@{/js/alternation_task.js}"></script>
+<script th:src="@{/js/creation_task.js}"></script>
+<script th:src="@{/js/todo.js}"></script>
+<script th:src="@{/js/header.js}"></script>
+</body>
+</html>

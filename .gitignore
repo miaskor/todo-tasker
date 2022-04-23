@@ -1,0 +1,5 @@
+# Project exclude paths
+/.gradle/
+/domain/domain-connector/build/
+/telegram-bot/build/
+/telegram-bot/build/classes/java/main/

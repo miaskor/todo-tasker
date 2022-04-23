@@ -1,0 +1,64 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <link th:href="@{/css/login.css}" rel="stylesheet"
+          type="text/css"/>
+    <link th:replace="/footer :: footer_style">
+    <link th:replace="/header :: header_style">
+</head>
+<body>
+<div th:replace="/header :: header"></div>
+
+<!--
+TODO in the next version (maybe)
+<div class="hidden modal__window">
+    <button class="close__modal">&times;</button>
+    <div class="security__number hidden">
+        <div><input type="text" class="checked_security" autocomplete="off" name="number1" maxlength="1"/></div>
+        <div><input type="text" class="checked_security" autocomplete="off" name="number2" maxlength="1"/></div>
+        <div><input type="text" class="checked_security" autocomplete="off" name="number3" maxlength="1"/></div>
+        <div><input type="text" class="checked_security" autocomplete="off" name="number4" maxlength="1"/></div>
+    </div>
+    <input type="submit" name="back_to_email" class="back_to_email hidden" value="Change Email"/>
+    <input type="email" name="email" class="forgotten_email" placeholder="Please input email" autocomplete="off"
+           required/>
+    <p id="check_email_to_change_password" class="red hidden"></p>
+    <input type="submit" name="accept_email" class="accept_email" value="Send code">
+</div>
+<div class="hidden modal__background"></div>
+-->
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <div class="authorization_headers">
+            <h2 id="signIn" class="active">Sign In</h2>
+            <h2 id="signUp" class="inactive underlineHover">Sign Up</h2>
+        </div>
+        <div class="form_composition">
+            <form id="form" action="/auth" method="post">
+                <label for="login">
+                    <input type="text" id="login" class="fadeIn first" name="login" placeholder="login" required>
+                </label>
+                <label for="email">
+                    <input type="email" id="email" class="fadeIn first hidden" name="email" placeholder="email">
+                </label>
+                <label for="password">
+                    <input type="password" id="password" class="fadeIn second" name="password" placeholder="password"
+                           required minlength="8">
+                </label>
+                <p id="error" style="color: red"></p>
+                <input type="submit" id="sbm_btn" class="fadeIn third" value="Sign In">
+            </form>
+        </div>
+        <div id="formFooter">
+            <a class="underlineHover fadeIn fourth" id="forgot_password" href="#">Forgot Password?</a>
+        </div>
+    </div>
+</div>
+<div th:replace="/footer :: footer"></div>
+<script th:src="@{/js/authorization.js}"></script>
+<script th:src="@{/js/cookies.js}"></script>
+<script th:src="@{/js/header.js}"></script>
+</body>
+</html>

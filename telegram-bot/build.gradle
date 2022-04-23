@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id "io.spring.dependency-management"
+    id "org.springframework.boot"
+}
+
+group 'by.hariton'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.springframework.security', name: 'spring-security-core'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    implementation project(':domain:domain-connector')
+    implementation 'org.telegram:telegrambots:5.5.0'
+    implementation 'io.github.openfeign:feign-core:11.7'
+    implementation 'io.github.openfeign:feign-okhttp:11.7'
+    implementation 'io.github.openfeign:feign-slf4j:11.7'
+    implementation 'io.github.openfeign:feign-gson:11.7'
+    implementation 'io.github.openfeign:feign-jackson:11.7'
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}

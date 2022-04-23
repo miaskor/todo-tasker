@@ -1,0 +1,17 @@
+.footer_container {
+  height: 70px;
+  display: flex;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: linear-gradient(to bottom, #f34, #725);
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+p {
+  color: #ffffff;
+}

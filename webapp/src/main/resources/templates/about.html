@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>About</title>
+  <meta charset="utf-8">
+  <link th:replace="/header :: header_style">
+  <link th:href="@{/css/about.css}" rel="stylesheet"
+        type="text/css"/>
+</head>
+<body>
+<div th:replace="/header :: header"></div>
+<div class="pages">
+  <img th:src="@{/img/first_page_about.png}"/>
+  <img th:src="@{/img/second_page_about.png}"/>
+  <img th:src="@{/img/third_page_about.png}"/>
+</div>
+<script th:src="@{/js/header.js}"></script>
+</body>
+</html>

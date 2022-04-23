@@ -1,0 +1,20 @@
+server:
+  port: 8081
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
+
+connector:
+  rest-api:
+    client-url: http://localhost:8080/api/clients
+    task-url: http://localhost:8080/api/tasks
+  token:
+    url: http://localhost:8082/api
+
+
+

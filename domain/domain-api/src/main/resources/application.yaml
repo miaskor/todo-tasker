@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://192.168.1.108:5432/to_do_list_repository
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver

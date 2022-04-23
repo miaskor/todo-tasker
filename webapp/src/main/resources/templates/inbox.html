@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>TODO</title>
+  <meta charset="utf-8">
+  <link th:href="@{/css/inbox.css}" rel="stylesheet"
+        type="text/css"/>
+  <link th:replace="/footer :: footer_style">
+  <link th:replace="/header :: header_style">
+</head>
+<body>
+<div th:replace="/header :: header"></div>
+<button class="box-btn">add Task</button>
+<div class="popup__overlay hidden">
+  <form method="post" class="creation-form ">
+    <div class="close"><img src="img/exit.png"></div>
+    <input type="text" id="task_name" class="fadeIn first" name="task_name" placeholder="name" required>
+    <input type="date" id="date" class="fadeIn first" name="date" placeholder="date" required>
+    <select name="task_state" multiple required>
+      <option value="UPCOMING">Upcoming</option>
+      <option value="IN_PROCESS">In process</option>
+      <option value="COMPLETED">Completed</option>
+    </select>
+    <button type="submit">Create</button>
+  </form>
+</div>
+<div id="state_list" class="state_list">
+  <div class="state" style="background-color: #ffaaaa" id="FAILED">
+    <div class="state-lable">Failed</div>
+    <div class="tasks"></div>
+  </div>
+  <div class="state" style="background-color: darkgray" id="UPCOMING">
+    <div class="state-lable">Upcoming</div>
+    <div class="tasks"></div>
+  </div>
+  <div class="state" style="background-color: dodgerblue" id="IN_PROCESS">
+    <div class="state-lable">In process</div>
+    <div class="tasks"></div>
+  </div>
+  <div class="state" style="background-color: lightgreen" id="COMPLETED">
+    <div class="state-lable">Completed</div>
+    <div class="tasks"></div>
+  </div>
+</div>
+<div th:replace="/footer :: footer"></div>
+
+<script th:src="@{/js/input_class.js}"></script>
+<script th:src="@{/js/div_class.js}"></script>
+<script th:src="@{/js/date_addition.js}"></script>
+<script th:src="@{/js/cookies.js}"></script>
+<script th:src="@{/js/drag_drop.js}"></script>
+<script th:src="@{/js/alternation_task.js}"></script>
+<script th:src="@{/js/task_integration.js}"></script>
+<script th:src="@{/js/inbox.js}"></script>
+<script th:src="@{/js/header.js}"></script>
+</body>
+</html>

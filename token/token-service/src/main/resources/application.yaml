@@ -1,0 +1,5 @@
+token:
+  secretKey: "homie"
+  expiredAt: 3600000
+server:
+  port: 8082

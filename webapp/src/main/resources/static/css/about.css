@@ -1,0 +1,10 @@
+.pages {
+  width: 100%;
+  padding-top: 50px;
+  text-align: center;
+}
+
+.pages > img {
+  width: 70%;
+  padding-bottom: 50px;
+}
