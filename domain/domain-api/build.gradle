@@ -1,43 +1,14 @@
-plugins {
-    id 'org.jetbrains.kotlin.jvm'
-    id "io.spring.dependency-management"
-    id "org.springframework.boot"
-}
-
-group 'by.miaskor'
-version '1.0'
-
-repositories {
-    mavenCentral()
-}
-/**
- * Spring
- * */
 dependencies {
   implementation group: 'org.springframework.security', name: 'spring-security-core'
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
   implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310'
   implementation project(':domain:domain-connector')
-}
 
-/**
- * Other
- */
-dependencies {
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.8'
-}
+  implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.8'
 
-/**
- * Test
- * */
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.5.31"
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-}
-
-test {
-    useJUnitPlatform()
+  implementation "org.jetbrains.kotlin:kotlin-reflect:1.5.31"
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
 
