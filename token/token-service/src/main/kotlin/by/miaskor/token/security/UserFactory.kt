@@ -9,7 +9,7 @@ class UserFactory {
       id = clientDtoResponse.id,
       login = clientDtoResponse.login,
       email = clientDtoResponse.email,
-      user_password = clientDtoResponse.password
+      user_password = ""
     )
   }
 }

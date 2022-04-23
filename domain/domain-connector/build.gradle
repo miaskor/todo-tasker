@@ -1,16 +1,3 @@
-plugins {
-  id 'org.jetbrains.kotlin.jvm'
-  id "io.spring.dependency-management"
-  id "org.springframework.boot"
-}
-
-group 'by.miaskor'
-version '1.0'
-
-repositories {
-  mavenCentral()
-}
-
 dependencies {
   implementation 'io.github.openfeign:feign-core:11.7'
   implementation 'io.github.openfeign:feign-jackson:11.7'
@@ -19,7 +6,4 @@ dependencies {
   implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310'
 }
 
-bootJar {
-  enabled = false
-}
 
