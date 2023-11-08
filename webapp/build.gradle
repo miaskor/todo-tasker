@@ -1,22 +1,16 @@
 dependencies {
-  implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-  implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf'
-  implementation project(':domain:domain-connector')
-  implementation project(':token:token-connector')
-  implementation 'io.github.openfeign:feign-core:11.7'
-  implementation 'io.github.openfeign:feign-okhttp:11.7'
-  implementation 'io.github.openfeign:feign-slf4j:11.7'
-  implementation 'io.github.openfeign:feign-gson:11.7'
-  implementation 'io.github.openfeign:feign-hystrix:11.7'
-  implementation 'io.github.openfeign:feign-jackson:11.7'
+  implementation projects.domain.domainConnector
+  implementation projects.token.tokenConnector
 
-  implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310'
+  implementation libs.starter.web
+  implementation libs.starter.thymeleaf
+  implementation libs.jackson.jsr310
+  implementation libs.bundles.feign
+  implementation libs.jjwt
 
-  implementation 'io.jsonwebtoken:jjwt:0.2'
+  compileOnly libs.lombok
+  annotationProcessor libs.lombok
 
-  compileOnly "org.projectlombok:lombok:1.18.20"
-  annotationProcessor 'org.projectlombok:lombok:1.18.20'
-
-  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+  testImplementation libs.junit5.api
+  testRuntimeOnly libs.junit5.engine
 }
