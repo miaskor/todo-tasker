@@ -1,0 +1,4 @@
+FROM azul/zulu-openjdk:17
+LABEL author=miaskor
+COPY /build/libs/domain-api-1.0.jar domain-api-1.0.jar
+ENTRYPOINT ["java","-jar","domain-api-1.0.jar"]

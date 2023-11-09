@@ -5,11 +5,11 @@
   <meta charset="utf-8">
   <link th:href="@{/css/inbox.css}" rel="stylesheet"
         type="text/css"/>
-  <link th:replace="/footer :: footer_style">
-  <link th:replace="/header :: header_style">
+  <link th:replace="footer :: footer_style">
+  <link th:replace="header :: header_style">
 </head>
 <body>
-<div th:replace="/header :: header"></div>
+<div th:replace="header :: header"></div>
 <button class="box-btn">add Task</button>
 <div class="popup__overlay hidden">
   <form method="post" class="creation-form ">
@@ -42,7 +42,7 @@
     <div class="tasks"></div>
   </div>
 </div>
-<div th:replace="/footer :: footer"></div>
+<div th:replace="footer :: footer"></div>
 
 <script th:src="@{/js/input_class.js}"></script>
 <script th:src="@{/js/div_class.js}"></script>

@@ -23,6 +23,6 @@ open class ConnectorConfig {
       .encoder(GsonEncoder())
       .logger(Slf4jLogger(ClientConnector::class.java))
       .logLevel(Logger.Level.FULL)
-      .target(ClientConnector::class.java, "http://localhost:8080/api/clients")
+      .target(ClientConnector::class.java, "http://domain-api:8080/api/clients")
   }
 }

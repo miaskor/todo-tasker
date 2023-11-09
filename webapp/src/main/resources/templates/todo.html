@@ -5,11 +5,11 @@
   <meta charset="utf-8">
   <link th:href="@{/css/todo.css}" rel="stylesheet"
         type="text/css"/>
-  <link th:replace="/footer :: footer_style">
-  <link th:replace="/header :: header_style">
+  <link th:replace="footer :: footer_style">
+  <link th:replace="header :: header_style">
 </head>
 <body>
-<div th:replace="/header :: header"></div>
+<div th:replace="header :: header"></div>
 <div class="above_footer">
   <div class="change_list">
     <input type="button" id="move_left" value="<-">
@@ -19,7 +19,7 @@
 </div>
 <div id="to_do_list" class="to_do_list">
 
-  <div th:replace="/footer :: footer"></div>
+  <div th:replace="footer :: footer"></div>
 </div>
 <script th:src="@{/js/cookies.js}"></script>
 <script th:src="@{/js/div_class.js}"></script>

@@ -1,9 +1,9 @@
 dependencies {
-  implementation 'io.github.openfeign:feign-core:11.7'
-  implementation 'io.github.openfeign:feign-jackson:11.7'
-  implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0'
-  implementation group: 'org.springframework', name: 'spring-context'
-  implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310'
+  implementation libs.feign.core
+  implementation libs.feign.jackson
+  implementation libs.spring.context
+  implementation libs.jackson.kotlin
+  implementation libs.jackson.jsr310
 }
 
 

@@ -1,5 +1,6 @@
 package by.miaskor.domain.store.entities
 
+import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -14,6 +15,7 @@ data class ClientEntity(
   val id: Int = -1,
   val email: String = "",
   val login: String = "",
-  val botId: Long = -1,
+  @Column(nullable = true)
+  val botId: Long? = null,
   val password: String = ""
 )

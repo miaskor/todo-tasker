@@ -1,10 +1,13 @@
 rootProject.name = 'todo-tasker'
-include 'domain'
-include 'webapp'
-include 'domain:domain-connector'
-include 'domain:domain-api'
-include 'token'
-include 'token:token-service'
-include 'token:token-connector'
-include 'telegram-bot'
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
+include(
+    ':domain',
+    ':domain:domain-connector',
+    ':domain:domain-api',
+    ':token',
+    ':token:token-service',
+    ':token:token-connector',
+    ':webapp',
+    ':telegram-bot'
+)

@@ -1,0 +1,4 @@
+FROM azul/zulu-openjdk:17
+LABEL author=miaskor
+COPY /build/libs/telegram-bot-1.0-plain.jar telegram-bot-1.0-plain.jar
+ENTRYPOINT ["java","-jar","telegram-bot-1.0-plain.jar"]

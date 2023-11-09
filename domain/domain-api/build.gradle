@@ -1,14 +1,14 @@
 dependencies {
-  implementation group: 'org.springframework.security', name: 'spring-security-core'
-  implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-  implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
-  implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310'
-  implementation project(':domain:domain-connector')
+  implementation projects.domain.domainConnector
 
-  implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.8'
+  implementation libs.ss.core
+  implementation libs.starter.web
+  implementation libs.starter.data.jpa
+  implementation libs.jackson.jsr310
+  implementation libs.postgresql
+  implementation libs.kotlin.reflect
 
-  implementation "org.jetbrains.kotlin:kotlin-reflect:1.5.31"
-  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+  testImplementation libs.junit5.api
+  testRuntimeOnly libs.junit5.engine
 }
 

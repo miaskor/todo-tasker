@@ -1,6 +1,12 @@
 # Project exclude paths
 /.gradle/
 /.idea/
+/domain/build/
+/domain/domain-api/build/
 /domain/domain-connector/build/
 /telegram-bot/build/
 /telegram-bot/build/classes/java/main/
+/token/build/
+/token/token-service/build/
+/token/token-connector/build/
+/webapp/build/
