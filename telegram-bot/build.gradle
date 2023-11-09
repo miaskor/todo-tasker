@@ -9,3 +9,18 @@ dependencies {
   testImplementation libs.junit5.api
   testRuntimeOnly libs.junit5.engine
 }
+
+jar {
+  from {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    configurations.runtimeClasspath
+        .filter {it.exists()}
+        .filter {file -> file.name.endsWith(".jar")}
+        .collect {it.isDirectory() ? it : zipTree(it)}
+  }
+  manifest {
+    attributes(
+        'Main-Class': 'by.hariton.ToDoTaskerBot'
+    )
+  }
+}

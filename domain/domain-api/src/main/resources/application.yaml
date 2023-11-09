@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://192.168.1.108:5432/to_do_list_repository
+    url: jdbc:postgresql://db-postgres:5432/to_do
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver

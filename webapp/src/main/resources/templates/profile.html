@@ -5,14 +5,14 @@
   <meta charset="utf-8">
   <link th:href="@{/css/profile.css}" rel="stylesheet"
         type="text/css"/>
-  <link th:replace="/footer :: footer_style">
-  <link th:replace="/header :: header_style">
+  <link th:replace="footer :: footer_style">
+  <link th:replace="header :: header_style">
 </head>
 <body>
-<div th:replace="/header :: header"></div>
+<div th:replace="header :: header"></div>
 
 
-<div th:replace="/footer :: footer"></div>
+<div th:replace="footer :: footer"></div>
 <script th:src="@{/js/header.js}"></script>
 </body>
 </html>

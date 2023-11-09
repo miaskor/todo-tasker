@@ -1,0 +1,86 @@
+version: '3.6'
+volumes:
+  postgres-db:
+
+services:
+
+  webapp:
+    image: 'webapp:1.0'
+    container_name: webapp
+    build:
+      context: webapp
+      dockerfile: DockerFile
+      tags:
+        - 'webapp:1.0'
+    restart: unless-stopped
+    ports:
+      - '8081:8081'
+    networks:
+      - local-net
+    depends_on:
+      - telegram-bot
+      - token-service
+
+  domain-api:
+    image: 'domain-api:1.0'
+    container_name: domain-api
+    build:
+      context: domain/domain-api
+      dockerfile: DockerFile
+      tags:
+        - 'domain-api:1.0'
+    restart: unless-stopped
+    ports:
+      - '8080:8080'
+    networks:
+      - local-net
+    depends_on:
+      - db-postgres
+
+  telegram-bot:
+    image: 'telegram-bot:1.0'
+    container_name: telegram-bot
+    build:
+      context: telegram-bot
+      dockerfile: DockerFile
+      tags:
+        - 'telegram-bot:1.0'
+    networks:
+      - local-net
+    restart: unless-stopped
+    depends_on:
+      - domain-api
+
+  token-service:
+    image: 'token-service:1.0'
+    container_name: token-service
+    build:
+      context: token/token-service
+      dockerfile: DockerFile
+      tags:
+        - 'token-service:1.0'
+    networks:
+      - local-net
+    restart: unless-stopped
+    ports:
+      - '8082:8082'
+    depends_on:
+      - domain-api
+
+  db-postgres:
+    image: 'postgres:15-bullseye'
+    container_name: db-postgres
+    restart: unless-stopped
+    environment:
+      - 'POSTGRES_PASSWORD=postgres'
+    networks:
+      - local-net
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres-db:/var/lib/postgresql
+
+networks:
+  local-net:
+    driver: bridge
+    name: local-net

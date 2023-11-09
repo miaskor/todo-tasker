@@ -24,12 +24,6 @@ subprojects {
   test {
     useJUnitPlatform()
   }
-
-  allprojects.forEach {project ->
-    if (project.hasProperty("bootJar")) {
-      project.bootJar.enabled = false
-    }
-  }
 }
 
 jar {

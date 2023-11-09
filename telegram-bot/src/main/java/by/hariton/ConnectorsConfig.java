@@ -14,8 +14,8 @@ import feign.slf4j.Slf4jLogger;
 
 public class ConnectorsConfig {
 
-    private static final String URL_CLIENT = "http://192.168.1.109:8080/api/clients";
-    private static final String URL_TASK = "http://192.168.1.109:8080/api/tasks";
+    private static final String URL_CLIENT = "http://domain-api:8080/api/clients";
+    private static final String URL_TASK = "http://domain-api:8080/api/tasks";
 
     public ObjectMapper objectMapper() {
         return new ObjectMapper().registerModule(new JavaTimeModule())
