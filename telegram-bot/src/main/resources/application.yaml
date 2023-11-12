@@ -1,0 +1,18 @@
+connector:
+  rest-api:
+    client-url: http://domain-api:8080/api/clients
+    task-url: http://domain-api:8080/api/tasks
+bot:
+  message:
+    start-message: "
+          Ваш уникальный id - %s.
+          Чтобы бот реагировал на ваши сообщения, введите его на сайте, в разделе Profile -> BotId.
+          Так же вы можете пользоваться нашими командами или писать любую дату,в формате 2021-01-01, чтобы узнать ваши таски на этот день.
+     "
+    task-exists: "Задачи на %s:\n%s"
+    task-is-not-exists: "Извините, задач на %s нет"
+    task-with-state-is-not-exists: "Извините, задач cо статусом %s нет"
+    task-with-state-exists: "Задачи cо статусом %s: \n%s"
+    incorrect-command: "Введите дату в правильном формате. \n Например: 2021-01-01"
+  username: "@ToDoTaskerBot"
+  token: "5042012734:AAEoCC7pfoU0uW0GikAomW9jI_j6VbkIDPQ"
