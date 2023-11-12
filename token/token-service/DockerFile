@@ -1,4 +1,0 @@
-FROM azul/zulu-openjdk:17
-LABEL author=miaskor
-COPY /build/libs/token-service-1.0.jar token-service-1.0.jar
-ENTRYPOINT ["java","-jar","token-service-1.0.jar"]
