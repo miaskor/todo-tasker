@@ -8,10 +8,13 @@ services:
     image: 'webapp:1.0'
     container_name: webapp
     build:
-      context: webapp
+      context: .
       dockerfile: DockerFile
       tags:
         - 'webapp:1.0'
+      args:
+        JAR_PATH: 'webapp/build/libs/webapp-1.0.jar'
+
     restart: unless-stopped
     ports:
       - '8081:8081'
@@ -25,10 +28,12 @@ services:
     image: 'domain-api:1.0'
     container_name: domain-api
     build:
-      context: domain/domain-api
+      context: .
       dockerfile: DockerFile
       tags:
         - 'domain-api:1.0'
+      args:
+        JAR_PATH: 'domain/domain-api/build/libs/domain-api-1.0.jar'
     restart: unless-stopped
     ports:
       - '8080:8080'
@@ -41,10 +46,12 @@ services:
     image: 'telegram-bot:1.0'
     container_name: telegram-bot
     build:
-      context: telegram-bot
+      context: .
       dockerfile: DockerFile
       tags:
         - 'telegram-bot:1.0'
+      args:
+        JAR_PATH: 'telegram-bot/build/libs/telegram-bot-1.0.jar'
     networks:
       - local-net
     restart: unless-stopped
@@ -55,10 +62,12 @@ services:
     image: 'token-service:1.0'
     container_name: token-service
     build:
-      context: token/token-service
+      context: .
       dockerfile: DockerFile
       tags:
         - 'token-service:1.0'
+      args:
+        JAR_PATH: 'token/token-service/build/libs/token-service-1.0.jar'
     networks:
       - local-net
     restart: unless-stopped
