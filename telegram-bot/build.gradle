@@ -2,25 +2,15 @@ dependencies {
   implementation projects.domain.domainConnector
 
   implementation libs.ss.core
-  implementation libs.starter.web
+  implementation libs.starter
   implementation libs.telegrambots
   implementation libs.bundles.feign
+  implementation libs.jackson.jsr310
+  implementation libs.lombok
+
+  annotationProcessor libs.lombok
 
   testImplementation libs.junit5.api
   testRuntimeOnly libs.junit5.engine
 }
 
-jar {
-  from {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    configurations.runtimeClasspath
-        .filter {it.exists()}
-        .filter {file -> file.name.endsWith(".jar")}
-        .collect {it.isDirectory() ? it : zipTree(it)}
-  }
-  manifest {
-    attributes(
-        'Main-Class': 'by.hariton.ToDoTaskerBot'
-    )
-  }
-}

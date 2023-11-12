@@ -31,6 +31,7 @@ kotlin-reflect    = { module = "org.jetbrains.kotlin:kotlin-reflect",    version
 ss-core           = { module = "org.springframework.security:spring-security-core"                      }
 spring-context    = { module = "org.springframework:spring-context"                                     }
 starter-web       = { module = "org.springframework.boot:spring-boot-starter-web"                       }
+starter           = { module = "org.springframework.boot:spring-boot-starter"                           }
 starter-thymeleaf = { module = "org.springframework.boot:spring-boot-starter-thymeleaf"                 }
 starter-data-jpa  = { module = "org.springframework.boot:spring-boot-starter-data-jpa"                  }
 starter-security  = { module = "org.springframework.boot:spring-boot-starter-security"                  }
