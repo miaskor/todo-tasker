@@ -12,8 +12,8 @@ public class CommandResolver {
 
   private static final String DATE_PATTERN = "\\d{4}-\\d{2}-\\d{2}";
   private static final String BOT_COMMAND = "bot_command";
-  public static final String INCORRECT_COMMAND = "incorrect";
-  public static final String DATE_COMMAND = "date";
+  private static final String INCORRECT_COMMAND = "incorrect";
+  private static final String DATE_COMMAND = "date";
 
   public String resolve(Message message) {
     return Optional.ofNullable(message.getEntities())
