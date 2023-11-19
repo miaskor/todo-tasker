@@ -1,4 +1,4 @@
-package by.miaskor.domain.store.entities
+package by.miaskor.domain.store.entity
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -12,10 +12,10 @@ import javax.persistence.Table
 data class ClientEntity(
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  val id: Int = -1,
+  val id: Long = -1,
   val email: String = "",
   val login: String = "",
   @Column(nullable = true)
   val botId: Long? = null,
-  val password: String = ""
+  val password: String = "",
 )

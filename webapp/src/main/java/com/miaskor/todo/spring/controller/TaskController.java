@@ -1,8 +1,8 @@
 package com.miaskor.todo.spring.controller;
 
 import by.miaskor.domain.connector.TaskConnector;
-import by.miaskor.domain.dto.TaskDtoRequest;
-import by.miaskor.domain.dto.TaskDtoResponse;
+import by.miaskor.domain.model.task.CreateTaskRequest;
+import by.miaskor.domain.model.task.TaskResponse;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
@@ -31,12 +31,12 @@ public class TaskController {
   }
 
   @PostMapping("/save")
-  public TaskDtoResponse save(@RequestBody TaskDtoRequest task) {
+  public TaskResponse save(@RequestBody CreateTaskRequest task) {
     return taskConnector.create(task);
   }
 
   @GetMapping("/range")
-  public Map<String, List<TaskDtoResponse>> getAllByClientIdAndDateBetween(
+  public Map<String, List<TaskResponse>> getAllByClientIdAndDateBetween(
       @RequestParam("date_from") String dateFrom,
       @RequestParam("date_to") String dateTo
   ) {
@@ -49,13 +49,13 @@ public class TaskController {
   }
 
   @GetMapping("/all")
-  public List<TaskDtoResponse> getAllByClientIdAndDateBetween(
+  public List<TaskResponse> getAllByClientIdAndDateBetween(
       @RequestParam("client_id") Integer clientId) {
     return taskConnector.getAllByClientId(clientId);
   }
 
   @PatchMapping("/update/{id}")
-  public TaskDtoResponse update(@PathVariable("id") Integer taskId, @RequestBody TaskDtoRequest task) {
+  public TaskResponse update(@PathVariable("id") Integer taskId, @RequestBody CreateTaskRequest task) {
     return taskConnector.update(taskId, task);
   }
 

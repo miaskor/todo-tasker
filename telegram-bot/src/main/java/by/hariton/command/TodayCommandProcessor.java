@@ -4,13 +4,12 @@ import static by.hariton.SendMessageFactory.createSendMessage;
 
 import by.hariton.config.properties.BotMessageProperties;
 import by.miaskor.domain.connector.TaskConnector;
-import by.miaskor.domain.dto.TaskDtoResponse;
+import by.miaskor.domain.model.task.TaskResponse;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
@@ -23,7 +22,7 @@ public class TodayCommandProcessor implements CommandProcessor<Message> {
   @Override
   @SneakyThrows
   public SendMessage process(String chatId, String command) {
-    List<TaskDtoResponse> taskDtos = taskConnector.getTasksOnCurrentDayByBotId(Long.parseLong(chatId));
+    List<TaskResponse> taskDtos = taskConnector.getTasksOnCurrentDayByBotId(Long.parseLong(chatId));
 
     if (taskDtos.isEmpty()) {
       return sendMessageIfTaskNotExists(chatId);
@@ -39,10 +38,10 @@ public class TodayCommandProcessor implements CommandProcessor<Message> {
     return createSendMessage(chatId, message);
   }
 
-  private SendMessage sendMessageIfTaskExists(String chatId, List<TaskDtoResponse> taskDtos) {
+  private SendMessage sendMessageIfTaskExists(String chatId, List<TaskResponse> taskDtos) {
     String today = LocalDate.now().toString();
     String tasks = taskDtos.stream()
-        .map(TaskDtoResponse::getTaskName)
+        .map(TaskResponse::getTaskName)
         .collect(Collectors.joining("\n"));
 
     String message = botMessageProperties.taskExists().formatted(today, tasks);

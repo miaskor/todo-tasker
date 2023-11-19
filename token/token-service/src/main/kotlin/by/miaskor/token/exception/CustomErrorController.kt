@@ -1,6 +1,6 @@
 package by.miaskor.token.exception
 
-import by.miaskor.domain.dto.ErrorDto
+import by.miaskor.domain.model.ErrorDto
 import org.springframework.boot.web.error.ErrorAttributeOptions
 import org.springframework.boot.web.servlet.error.ErrorAttributes
 import org.springframework.boot.web.servlet.error.ErrorController

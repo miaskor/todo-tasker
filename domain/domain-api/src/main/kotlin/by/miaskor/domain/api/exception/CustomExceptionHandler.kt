@@ -1,4 +1,4 @@
-package by.miaskor.domain.api.exceptions
+package by.miaskor.domain.api.exception
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice

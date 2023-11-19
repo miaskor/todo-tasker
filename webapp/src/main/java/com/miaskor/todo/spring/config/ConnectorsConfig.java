@@ -2,10 +2,10 @@ package com.miaskor.todo.spring.config;
 
 import by.miaskor.domain.connector.ClientConnector;
 import by.miaskor.domain.connector.TaskConnector;
-import by.miaskor.domain.dto.ClientDtoRequest;
-import by.miaskor.domain.dto.ClientDtoResponse;
-import by.miaskor.domain.dto.TaskDtoRequest;
-import by.miaskor.domain.dto.TaskDtoResponse;
+import by.miaskor.domain.model.client.ClientResponse;
+import by.miaskor.domain.model.client.CreateClientRequest;
+import by.miaskor.domain.model.task.CreateTaskRequest;
+import by.miaskor.domain.model.task.TaskResponse;
 import by.miaskor.token.connector.connector.TokenConnector;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -54,38 +54,38 @@ public class ConnectorsConfig {
         .target(ClientConnector.class, urlDomainClientConnector, new ClientConnector() {
           @NotNull
           @Override
-          public ClientDtoResponse update(int clientId, @NotNull ClientDtoRequest clientDtoRequest) {
-            return new ClientDtoResponse();
+          public ClientResponse update(int clientId, @NotNull CreateClientRequest createClientRequest) {
+            return new ClientResponse();
           }
 
           @NotNull
           @Override
-          public ClientDtoResponse getById(int clientId) {
-            return new ClientDtoResponse();
+          public ClientResponse getById(int clientId) {
+            return new ClientResponse();
           }
 
           @NotNull
           @Override
-          public ClientDtoResponse getByBotId(long botId) {
-            return new ClientDtoResponse();
+          public ClientResponse getByBotId(long botId) {
+            return new ClientResponse();
           }
 
           @NotNull
           @Override
-          public ClientDtoResponse getByLoginAndPassword(@NotNull String login, @NotNull String password) {
-            return new ClientDtoResponse();
+          public ClientResponse getByLoginAndPassword(@NotNull String login, @NotNull String password) {
+            return new ClientResponse();
           }
 
           @NotNull
           @Override
-          public ClientDtoResponse getByLogin(@NotNull String login) {
-            return new ClientDtoResponse();
+          public ClientResponse getByLogin(@NotNull String login) {
+            return new ClientResponse();
           }
 
           @NotNull
           @Override
-          public ClientDtoResponse createClient(@NotNull ClientDtoRequest clientDtoRequest) {
-            return new ClientDtoResponse();
+          public ClientResponse createClient(@NotNull CreateClientRequest createClientRequest) {
+            return new ClientResponse();
           }
         });
   }
@@ -101,57 +101,57 @@ public class ConnectorsConfig {
         .target(TaskConnector.class, urlDomainTaskConnector, new TaskConnector() {
           @NotNull
           @Override
-          public List<TaskDtoResponse> getAllByBotIdAndState(long botId, @NotNull String state) {
+          public List<TaskResponse> getAllByBotIdAndState(long botId, @NotNull String state) {
             return new ArrayList<>();
           }
 
           @NotNull
           @Override
-          public List<TaskDtoResponse> getAllByBotIdAndDate(long botId, @NotNull String date) {
+          public List<TaskResponse> getAllByBotIdAndDate(long botId, @NotNull String date) {
             return new ArrayList<>();
           }
 
           @NotNull
           @Override
-          public List<TaskDtoResponse> getTasksOnTomorrowByBotId(long botId) {
+          public List<TaskResponse> getTasksOnTomorrowByBotId(long botId) {
             return new ArrayList<>();
           }
 
           @NotNull
           @Override
-          public List<TaskDtoResponse> getTasksOnCurrentDayByBotId(long botId) {
+          public List<TaskResponse> getTasksOnCurrentDayByBotId(long botId) {
             return new ArrayList<>();
           }
 
           @NotNull
           @Override
-          public List<TaskDtoResponse> getAllByClientId(int clientId) {
+          public List<TaskResponse> getAllByClientId(int clientId) {
             return new ArrayList<>();
           }
 
           @NotNull
           @Override
-          public TaskDtoResponse create(@NotNull TaskDtoRequest task) {
-            return new TaskDtoResponse();
+          public TaskResponse create(@NotNull CreateTaskRequest task) {
+            return new TaskResponse();
           }
 
           @NotNull
           @Override
-          public Map<String, List<TaskDtoResponse>> getAllByClientIdAndDateBetween(@NotNull String dateFrom,
+          public Map<String, List<TaskResponse>> getAllByClientIdAndDateBetween(@NotNull String dateFrom,
               @NotNull String dateTo, int clientId) {
             return new HashMap<>();
           }
 
           @NotNull
           @Override
-          public List<TaskDtoResponse> getAllByClientIdAndDate(@NotNull String date, int clientId) {
+          public List<TaskResponse> getAllByClientIdAndDate(@NotNull String date, int clientId) {
             return new ArrayList<>();
           }
 
           @NotNull
           @Override
-          public TaskDtoResponse update(int taskId, @NotNull TaskDtoRequest task) {
-            return new TaskDtoResponse();
+          public TaskResponse update(int taskId, @NotNull CreateTaskRequest task) {
+            return new TaskResponse();
           }
 
           @Override
