@@ -4,7 +4,7 @@ import static by.hariton.SendMessageFactory.createSendMessage;
 
 import by.hariton.config.properties.BotMessageProperties;
 import by.miaskor.domain.connector.TaskConnector;
-import by.miaskor.domain.dto.TaskDtoResponse;
+import by.miaskor.domain.model.task.TaskResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ public class TaskStateCommandProcessor implements CommandProcessor<Message> {
   @SneakyThrows
   public SendMessage process(String chatId, String command) {
     String taskState = command;
-    List<TaskDtoResponse> taskDtos = taskConnector.getAllByBotIdAndState(Long.parseLong(chatId), taskState);
+    List<TaskResponse> taskDtos = taskConnector.getAllByBotIdAndState(Long.parseLong(chatId), taskState);
 
     if (taskDtos.isEmpty()) {
       return sendMessageIfTaskNotExists(chatId, taskState);
@@ -37,9 +37,9 @@ public class TaskStateCommandProcessor implements CommandProcessor<Message> {
     return createSendMessage(chatId, message);
   }
 
-  private SendMessage sendMessageIfTaskExists(String chatId, String taskState, List<TaskDtoResponse> taskDtos) {
+  private SendMessage sendMessageIfTaskExists(String chatId, String taskState, List<TaskResponse> taskDtos) {
     String tasks = taskDtos.stream()
-        .map(TaskDtoResponse::getTaskName)
+        .map(TaskResponse::getTaskName)
         .collect(Collectors.joining("\n"));
 
     String message = botMessageProperties.taskWithStateExists().formatted(taskState, tasks);
