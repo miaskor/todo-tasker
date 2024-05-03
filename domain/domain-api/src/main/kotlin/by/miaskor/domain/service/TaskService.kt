@@ -68,7 +68,7 @@ open class TaskService(
     taskRepository.deleteById(id)
   }
 
-  open fun getAllByClientIWithPagination(clientId: Long, pageable: Pageable): Sequence<TaskEntity> {
+  open fun getAllByClientIdWithPagination(clientId: Long, pageable: Pageable): Sequence<TaskEntity> {
     return taskRepository.findAllByClientId(clientId, pageable)
       .asSequence()
   }

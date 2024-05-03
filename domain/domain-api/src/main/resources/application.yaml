@@ -3,10 +3,11 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/to_do
+    url: jdbc:postgresql://domain-api:5433/to_do
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
+    database: POSTGRESQL
     show-sql: true
     open-in-view: false

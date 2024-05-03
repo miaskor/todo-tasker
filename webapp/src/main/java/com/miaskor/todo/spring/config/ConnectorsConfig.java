@@ -2,10 +2,13 @@ package com.miaskor.todo.spring.config;
 
 import by.miaskor.domain.connector.ClientConnector;
 import by.miaskor.domain.connector.TaskConnector;
+import by.miaskor.domain.model.client.ClientRequest;
 import by.miaskor.domain.model.client.ClientResponse;
 import by.miaskor.domain.model.client.CreateClientRequest;
 import by.miaskor.domain.model.task.CreateTaskRequest;
+import by.miaskor.domain.model.task.SearchTaskRequest;
 import by.miaskor.domain.model.task.TaskResponse;
+import by.miaskor.domain.model.task.TaskState;
 import by.miaskor.token.connector.connector.TokenConnector;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -18,10 +21,9 @@ import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import feign.slf4j.Slf4jLogger;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -54,38 +56,31 @@ public class ConnectorsConfig {
         .target(ClientConnector.class, urlDomainClientConnector, new ClientConnector() {
           @NotNull
           @Override
-          public ClientResponse update(int clientId, @NotNull CreateClientRequest createClientRequest) {
-            return new ClientResponse();
-          }
-
-          @NotNull
-          @Override
-          public ClientResponse getById(int clientId) {
-            return new ClientResponse();
-          }
-
-          @NotNull
-          @Override
-          public ClientResponse getByBotId(long botId) {
-            return new ClientResponse();
-          }
-
-          @NotNull
-          @Override
-          public ClientResponse getByLoginAndPassword(@NotNull String login, @NotNull String password) {
-            return new ClientResponse();
-          }
-
-          @NotNull
-          @Override
-          public ClientResponse getByLogin(@NotNull String login) {
-            return new ClientResponse();
-          }
-
-          @NotNull
-          @Override
           public ClientResponse createClient(@NotNull CreateClientRequest createClientRequest) {
             return new ClientResponse();
+          }
+
+          @NotNull
+          @Override
+          public ClientResponse getBy(@NotNull ClientRequest clientRequest) {
+            return new ClientResponse();
+          }
+
+          @NotNull
+          @Override
+          public ClientResponse getById(long clientId) {
+            return new ClientResponse();
+          }
+
+          @NotNull
+          @Override
+          public ClientResponse update(long clientId, @NotNull ClientRequest clientRequest) {
+            return new ClientResponse();
+          }
+
+          @Override
+          public void delete(long clientId) {
+
           }
         });
   }
@@ -99,29 +94,6 @@ public class ConnectorsConfig {
         .logger(new Slf4jLogger(TaskConnector.class))
         .logLevel(Logger.Level.FULL)
         .target(TaskConnector.class, urlDomainTaskConnector, new TaskConnector() {
-          @NotNull
-          @Override
-          public List<TaskResponse> getAllByBotIdAndState(long botId, @NotNull String state) {
-            return new ArrayList<>();
-          }
-
-          @NotNull
-          @Override
-          public List<TaskResponse> getAllByBotIdAndDate(long botId, @NotNull String date) {
-            return new ArrayList<>();
-          }
-
-          @NotNull
-          @Override
-          public List<TaskResponse> getTasksOnTomorrowByBotId(long botId) {
-            return new ArrayList<>();
-          }
-
-          @NotNull
-          @Override
-          public List<TaskResponse> getTasksOnCurrentDayByBotId(long botId) {
-            return new ArrayList<>();
-          }
 
           @NotNull
           @Override
@@ -132,30 +104,23 @@ public class ConnectorsConfig {
           @NotNull
           @Override
           public TaskResponse create(@NotNull CreateTaskRequest task) {
-            return new TaskResponse();
+            return new TaskResponse("", TaskState.FAILED, LocalDate.now());
           }
 
           @NotNull
           @Override
-          public Map<String, List<TaskResponse>> getAllByClientIdAndDateBetween(@NotNull String dateFrom,
-              @NotNull String dateTo, int clientId) {
-            return new HashMap<>();
+          public List<TaskResponse> getBy(@NotNull SearchTaskRequest searchTaskRequest) {
+            return List.of();
           }
 
           @NotNull
           @Override
-          public List<TaskResponse> getAllByClientIdAndDate(@NotNull String date, int clientId) {
-            return new ArrayList<>();
-          }
-
-          @NotNull
-          @Override
-          public TaskResponse update(int taskId, @NotNull CreateTaskRequest task) {
-            return new TaskResponse();
+          public TaskResponse update(long taskId, @NotNull CreateTaskRequest task) {
+            return new TaskResponse("", TaskState.FAILED, LocalDate.now());
           }
 
           @Override
-          public void delete(int taskId) {
+          public void delete(long taskId) {
 
           }
         });

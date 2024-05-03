@@ -6,7 +6,6 @@ class UserFactory {
 
   fun create(clientResponse: ClientResponse): User {
     return User(
-      id = clientResponse.id,
       login = clientResponse.login,
       email = clientResponse.email,
       user_password = ""

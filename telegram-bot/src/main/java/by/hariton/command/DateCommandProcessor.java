@@ -4,7 +4,10 @@ import static by.hariton.SendMessageFactory.createSendMessage;
 
 import by.hariton.config.properties.BotMessageProperties;
 import by.miaskor.domain.connector.TaskConnector;
+import by.miaskor.domain.model.task.SearchTaskRequest;
 import by.miaskor.domain.model.task.TaskResponse;
+import by.miaskor.domain.model.task.TaskState;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -22,8 +25,15 @@ public class DateCommandProcessor implements CommandProcessor<Message> {
   @SneakyThrows
   public SendMessage process(String chatId, String command) {
     String date = command;
-    List<TaskResponse> taskDtos = taskConnector.getAllByBotIdAndDate(Long.parseLong(chatId), date);
-
+    List<TaskResponse> taskDtos = taskConnector.getBy(
+        new SearchTaskRequest(
+            Long.parseLong(chatId),
+            Long.valueOf(-1),
+            TaskState.FAILED,
+            LocalDate.parse(date),
+            LocalDate.now()
+        )
+    );
     if (taskDtos.isEmpty()) {
       return sendMessageIfTaskNotExists(chatId, date);
     } else {

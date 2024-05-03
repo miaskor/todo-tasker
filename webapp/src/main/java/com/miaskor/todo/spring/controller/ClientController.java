@@ -1,6 +1,7 @@
 package com.miaskor.todo.spring.controller;
 
 import by.miaskor.domain.connector.ClientConnector;
+import by.miaskor.domain.model.client.ClientRequest;
 import by.miaskor.domain.model.client.ClientResponse;
 import by.miaskor.domain.model.client.CreateClientRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,9 @@ public class ClientController {
   @PatchMapping("/update/{id}")
   public ClientResponse update(
       @PathVariable("id") Integer clientId,
-      @RequestBody CreateClientRequest createClientRequest
+      @RequestBody ClientRequest clientRequest
   ) {
-    return clientConnector.update(clientId, createClientRequest);
+    return clientConnector.update(clientId, clientRequest);
   }
 
   @GetMapping("/{id}")

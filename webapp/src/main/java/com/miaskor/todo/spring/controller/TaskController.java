@@ -2,9 +2,13 @@ package com.miaskor.todo.spring.controller;
 
 import by.miaskor.domain.connector.TaskConnector;
 import by.miaskor.domain.model.task.CreateTaskRequest;
+import by.miaskor.domain.model.task.SearchTaskRequest;
 import by.miaskor.domain.model.task.TaskResponse;
+import by.miaskor.domain.model.task.TaskState;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,11 +45,11 @@ public class TaskController {
       @RequestParam("date_to") String dateTo
   ) {
     int clientId = Integer.parseInt(httpSession.getAttribute("clientId").toString());
-    return taskConnector.getAllByClientIdAndDateBetween(
-        dateFrom,
-        dateTo,
-        clientId
-    );
+    List<TaskResponse> taskResponses = taskConnector.getBy(new SearchTaskRequest(
+        Long.valueOf(-1), Long.valueOf(clientId), TaskState.FAILED, LocalDate.parse(dateFrom), LocalDate.parse(dateTo)
+    ));
+    return taskResponses.stream()
+        .collect(Collectors.groupingBy(taskResponse -> taskResponse.getDate().toString()));
   }
 
   @GetMapping("/all")

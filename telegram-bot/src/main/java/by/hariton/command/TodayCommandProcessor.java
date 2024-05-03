@@ -4,7 +4,9 @@ import static by.hariton.SendMessageFactory.createSendMessage;
 
 import by.hariton.config.properties.BotMessageProperties;
 import by.miaskor.domain.connector.TaskConnector;
+import by.miaskor.domain.model.task.SearchTaskRequest;
 import by.miaskor.domain.model.task.TaskResponse;
+import by.miaskor.domain.model.task.TaskState;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,8 +24,15 @@ public class TodayCommandProcessor implements CommandProcessor<Message> {
   @Override
   @SneakyThrows
   public SendMessage process(String chatId, String command) {
-    List<TaskResponse> taskDtos = taskConnector.getTasksOnCurrentDayByBotId(Long.parseLong(chatId));
-
+    List<TaskResponse> taskDtos = taskConnector.getBy(
+        new SearchTaskRequest(
+            Long.parseLong(chatId),
+            Long.valueOf(-1),
+            TaskState.FAILED,
+            LocalDate.now(),
+            LocalDate.now()
+        )
+    );
     if (taskDtos.isEmpty()) {
       return sendMessageIfTaskNotExists(chatId);
     } else {

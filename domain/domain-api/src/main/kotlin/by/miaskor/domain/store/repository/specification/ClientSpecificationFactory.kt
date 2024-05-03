@@ -4,6 +4,7 @@ import by.miaskor.domain.model.client.ClientRequest
 import by.miaskor.domain.store.entity.ClientEntity
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Component
+import java.lang.reflect.Field
 import javax.persistence.criteria.Predicate
 
 @Component
@@ -12,17 +13,12 @@ class ClientSpecificationFactory {
   fun createFindAllBy(clientRequest: ClientRequest): Specification<ClientEntity> {
     return Specification { root, _, cb ->
       val predicates = mutableListOf<Predicate>().apply {
-        if (clientRequest.login != null) {
-          add(cb.equal(root.get<String>("login"), clientRequest.login))
-        }
-        if (clientRequest.email != null) {
-          add(cb.equal(root.get<String>("email"), clientRequest.email))
-        }
-        if (clientRequest.password != null) {
-          add(cb.equal(root.get<String>("password"), clientRequest.password))
-        }
-        if (clientRequest.botId != null) {
-          add(cb.equal(root.get<Long>("botId"), clientRequest.botId))
+        clientRequest.javaClass.declaredFields.forEach { field: Field? ->
+          field?.trySetAccessible()
+          val fieldValue = field?.get(clientRequest)
+          if (fieldValue != null) {
+            add(cb.equal(root.get<String>(field.name), fieldValue))
+          }
         }
       }
       cb.and(*predicates.toTypedArray())

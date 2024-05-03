@@ -77,7 +77,6 @@ open class ClientService(
   }
 
   open fun getAndDelete(id: Long) {
-    getById(id)
-      .also { clientRepository.deleteById(id) }
+    clientRepository.deleteById(id)
   }
 }

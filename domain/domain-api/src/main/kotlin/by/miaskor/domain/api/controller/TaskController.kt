@@ -53,7 +53,7 @@ open class TaskController(
 
   @GetMapping
   fun getAllByClientId(@RequestParam("client_id") clientId: Long, pageable: Pageable): List<TaskResponse> {
-    return taskService.getAllByClientIWithPagination(clientId, pageable)
+    return taskService.getAllByClientIdWithPagination(clientId, pageable)
       .map(taskDtoResponseFactory::makeTaskDtoResponse)
       .toList()
   }
