@@ -1,8 +1,9 @@
 package com.miaskor.todo.spring.controller;
 
 import by.miaskor.domain.connector.ClientConnector;
-import by.miaskor.domain.dto.ClientDtoRequest;
-import by.miaskor.domain.dto.ClientDtoResponse;
+import by.miaskor.domain.model.client.ClientRequest;
+import by.miaskor.domain.model.client.ClientResponse;
+import by.miaskor.domain.model.client.CreateClientRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -23,15 +24,15 @@ public class ClientController {
   }
 
   @PatchMapping("/update/{id}")
-  public ClientDtoResponse update(
+  public ClientResponse update(
       @PathVariable("id") Integer clientId,
-      @RequestBody ClientDtoRequest clientDtoRequest
+      @RequestBody ClientRequest clientRequest
   ) {
-    return clientConnector.update(clientId, clientDtoRequest);
+    return clientConnector.update(clientId, clientRequest);
   }
 
   @GetMapping("/{id}")
-  public ClientDtoResponse getById(@PathVariable("id") Integer clientId) {
+  public ClientResponse getById(@PathVariable("id") Integer clientId) {
     return clientConnector.getById(clientId);
   }
 }

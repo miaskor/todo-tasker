@@ -1,14 +1,13 @@
 package by.miaskor.token.security
 
-import by.miaskor.domain.dto.ClientDtoResponse
+import by.miaskor.domain.model.client.ClientResponse
 
 class UserFactory {
 
-  fun create(clientDtoResponse: ClientDtoResponse): User {
+  fun create(clientResponse: ClientResponse): User {
     return User(
-      id = clientDtoResponse.id,
-      login = clientDtoResponse.login,
-      email = clientDtoResponse.email,
+      login = clientResponse.login,
+      email = clientResponse.email,
       user_password = ""
     )
   }

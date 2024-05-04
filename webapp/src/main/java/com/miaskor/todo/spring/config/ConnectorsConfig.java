@@ -1,11 +1,9 @@
 package com.miaskor.todo.spring.config;
 
 import by.miaskor.domain.connector.ClientConnector;
+import by.miaskor.domain.connector.ClientConnector.ClientConnectorFallbackFactory;
 import by.miaskor.domain.connector.TaskConnector;
-import by.miaskor.domain.dto.ClientDtoRequest;
-import by.miaskor.domain.dto.ClientDtoResponse;
-import by.miaskor.domain.dto.TaskDtoRequest;
-import by.miaskor.domain.dto.TaskDtoResponse;
+import by.miaskor.domain.connector.TaskConnector.TaskConnectorFallbackFactory;
 import by.miaskor.token.connector.connector.TokenConnector;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -18,11 +16,6 @@ import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import feign.slf4j.Slf4jLogger;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -51,43 +44,7 @@ public class ConnectorsConfig {
         .encoder(new JacksonEncoder(objectMapper()))
         .logger(new Slf4jLogger(ClientConnector.class))
         .logLevel(Logger.Level.FULL)
-        .target(ClientConnector.class, urlDomainClientConnector, new ClientConnector() {
-          @NotNull
-          @Override
-          public ClientDtoResponse update(int clientId, @NotNull ClientDtoRequest clientDtoRequest) {
-            return new ClientDtoResponse();
-          }
-
-          @NotNull
-          @Override
-          public ClientDtoResponse getById(int clientId) {
-            return new ClientDtoResponse();
-          }
-
-          @NotNull
-          @Override
-          public ClientDtoResponse getByBotId(long botId) {
-            return new ClientDtoResponse();
-          }
-
-          @NotNull
-          @Override
-          public ClientDtoResponse getByLoginAndPassword(@NotNull String login, @NotNull String password) {
-            return new ClientDtoResponse();
-          }
-
-          @NotNull
-          @Override
-          public ClientDtoResponse getByLogin(@NotNull String login) {
-            return new ClientDtoResponse();
-          }
-
-          @NotNull
-          @Override
-          public ClientDtoResponse createClient(@NotNull ClientDtoRequest clientDtoRequest) {
-            return new ClientDtoResponse();
-          }
-        });
+        .target(ClientConnector.class, urlDomainClientConnector, new ClientConnectorFallbackFactory());
   }
 
   @Bean
@@ -98,67 +55,7 @@ public class ConnectorsConfig {
         .encoder(new JacksonEncoder(objectMapper()))
         .logger(new Slf4jLogger(TaskConnector.class))
         .logLevel(Logger.Level.FULL)
-        .target(TaskConnector.class, urlDomainTaskConnector, new TaskConnector() {
-          @NotNull
-          @Override
-          public List<TaskDtoResponse> getAllByBotIdAndState(long botId, @NotNull String state) {
-            return new ArrayList<>();
-          }
-
-          @NotNull
-          @Override
-          public List<TaskDtoResponse> getAllByBotIdAndDate(long botId, @NotNull String date) {
-            return new ArrayList<>();
-          }
-
-          @NotNull
-          @Override
-          public List<TaskDtoResponse> getTasksOnTomorrowByBotId(long botId) {
-            return new ArrayList<>();
-          }
-
-          @NotNull
-          @Override
-          public List<TaskDtoResponse> getTasksOnCurrentDayByBotId(long botId) {
-            return new ArrayList<>();
-          }
-
-          @NotNull
-          @Override
-          public List<TaskDtoResponse> getAllByClientId(int clientId) {
-            return new ArrayList<>();
-          }
-
-          @NotNull
-          @Override
-          public TaskDtoResponse create(@NotNull TaskDtoRequest task) {
-            return new TaskDtoResponse();
-          }
-
-          @NotNull
-          @Override
-          public Map<String, List<TaskDtoResponse>> getAllByClientIdAndDateBetween(@NotNull String dateFrom,
-              @NotNull String dateTo, int clientId) {
-            return new HashMap<>();
-          }
-
-          @NotNull
-          @Override
-          public List<TaskDtoResponse> getAllByClientIdAndDate(@NotNull String date, int clientId) {
-            return new ArrayList<>();
-          }
-
-          @NotNull
-          @Override
-          public TaskDtoResponse update(int taskId, @NotNull TaskDtoRequest task) {
-            return new TaskDtoResponse();
-          }
-
-          @Override
-          public void delete(int taskId) {
-
-          }
-        });
+        .target(TaskConnector.class, urlDomainTaskConnector, new TaskConnectorFallbackFactory());
   }
 
   //TODO(Get Exception when token is expired. And user will get exception on web browser)

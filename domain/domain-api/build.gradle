@@ -4,6 +4,7 @@ dependencies {
   implementation libs.ss.core
   implementation libs.starter.web
   implementation libs.starter.data.jpa
+  implementation libs.starter.validation
   implementation libs.jackson.jsr310
   implementation libs.postgresql
   implementation libs.kotlin.reflect

@@ -1,7 +1,7 @@
 package com.miaskor.todo.spring.controller;
 
 import by.miaskor.domain.connector.ClientConnector;
-import by.miaskor.domain.dto.ClientDtoRequest;
+import by.miaskor.domain.model.client.CreateClientRequest;
 import by.miaskor.token.connector.connector.TokenConnector;
 import by.miaskor.token.connector.domain.ClientAuthDtoRequest;
 import com.miaskor.todo.spring.service.AuthorizationService;
@@ -30,9 +30,9 @@ public class AuthorizationController {
   }
 
   @PostMapping("/auth")
-  public ResponseEntity<Object> loginClient(@RequestBody ClientDtoRequest clientDtoRequest) {
+  public ResponseEntity<Object> loginClient(@RequestBody CreateClientRequest createClientRequest) {
     Map<String, String> data = tokenConnector.createToken(
-        new ClientAuthDtoRequest(clientDtoRequest.getLogin(), clientDtoRequest.getPassword())
+        new ClientAuthDtoRequest(createClientRequest.getLogin(), createClientRequest.getPassword())
     );
     authorizationService.auth(data);
     return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
@@ -40,8 +40,8 @@ public class AuthorizationController {
   }
 
   @PostMapping("/registration")
-  public ResponseEntity<Object> registrationClient(@RequestBody ClientDtoRequest clientRequestDto) {
-    clientConnector.createClient(clientRequestDto);
+  public ResponseEntity<Object> registrationClient(@RequestBody CreateClientRequest createClientRequestDto) {
+    clientConnector.createClient(createClientRequestDto);
     return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).location(URI.create("/auth")).build();
   }
 }

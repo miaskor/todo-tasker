@@ -1,6 +1,7 @@
 package by.miaskor.token.security
 
 import by.miaskor.domain.connector.ClientConnector
+import by.miaskor.domain.model.client.ClientRequest
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 
@@ -10,7 +11,7 @@ class UserDetailsService(
 ) : UserDetailsService {
 
   override fun loadUserByUsername(login: String): UserDetails {
-    val client = clientConnector.getByLogin(login)
+    val client = clientConnector.getBy(ClientRequest(login = login))
     return userFactory.create(client)
   }
 }

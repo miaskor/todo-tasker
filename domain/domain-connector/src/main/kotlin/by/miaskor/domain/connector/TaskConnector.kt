@@ -1,48 +1,56 @@
 package by.miaskor.domain.connector
 
-import by.miaskor.domain.dto.TaskDtoRequest
-import by.miaskor.domain.dto.TaskDtoResponse
+import by.miaskor.domain.model.task.CreateTaskRequest
+import by.miaskor.domain.model.task.SearchTaskRequest
+import by.miaskor.domain.model.task.TaskResponse
+import by.miaskor.domain.model.task.TaskState
 import feign.Headers
 import feign.Param
 import feign.RequestLine
+import feign.hystrix.FallbackFactory
+import java.time.LocalDate
+import java.util.*
 
 @Headers(value = ["Content-type: application/json"])
 interface TaskConnector {
 
   @RequestLine("POST /")
-  fun create(task: TaskDtoRequest): TaskDtoResponse
+  fun create(task: CreateTaskRequest): TaskResponse
 
-  @RequestLine("GET /range?date_from={date_from}&date_to={date_to}&client_id={client_id}")
-  fun getAllByClientIdAndDateBetween(
-    @Param("date_from") dateFrom: String,
-    @Param("date_to") dateTo: String,
-    @Param("client_id") clientId: Int
-  ): Map<String, List<TaskDtoResponse>>
+  @RequestLine("POST /search")
+  fun getBy(searchTaskRequest: SearchTaskRequest): List<TaskResponse>
 
-  @RequestLine("GET /date?date={date}&client_id={client_id}")
-  fun getAllByClientIdAndDate(
-    @Param("date") date: String,
-    @Param("client_id") clientId: Int
-  ): List<TaskDtoResponse>
-
-  @RequestLine("GET /all?client_id={client_id}")
-  fun getAllByClientId(@Param("client_id") clientId: Int): List<TaskDtoResponse>
+  @RequestLine("GET /client_id={client_id}")
+  fun getAllByClientId(@Param("client_id") clientId: Int): List<TaskResponse>
 
   @RequestLine("PATCH /{id}")
-  fun update(@Param("id") taskId: Int, task: TaskDtoRequest): TaskDtoResponse
+  fun update(@Param("id") taskId: Long, task: CreateTaskRequest): TaskResponse
 
   @RequestLine("DELETE /{id}")
-  fun delete(@Param("id") taskId: Int)
+  fun delete(@Param("id") taskId: Long)
 
-  @RequestLine("GET /currentDay/{bot_id}")
-  fun getTasksOnCurrentDayByBotId(@Param("bot_id") botId: Long): List<TaskDtoResponse>
+  class TaskConnectorFallbackFactory : FallbackFactory<TaskConnector> {
+    override fun create(p0: Throwable?): TaskConnector {
+      return object : TaskConnector {
+        override fun create(task: CreateTaskRequest): TaskResponse {
+          return TaskResponse("error", TaskState.FAILED, LocalDate.MIN)
+        }
 
-  @RequestLine("GET /tomorrow/{bot_id}")
-  fun getTasksOnTomorrowByBotId(@Param("bot_id") botId: Long): List<TaskDtoResponse>
+        override fun getBy(searchTaskRequest: SearchTaskRequest): List<TaskResponse> {
+          return Collections.singletonList(TaskResponse("error", TaskState.FAILED, LocalDate.MIN))
+        }
 
-  @RequestLine("GET /day/{bot_id}/{date}")
-  fun getAllByBotIdAndDate(@Param("bot_id") botId: Long, @Param date: String): List<TaskDtoResponse>
+        override fun getAllByClientId(clientId: Int): List<TaskResponse> {
+          return Collections.singletonList(TaskResponse("error", TaskState.FAILED, LocalDate.MIN))
+        }
 
-  @RequestLine("GET /state/{bot_id}/{state}")
-  fun getAllByBotIdAndState(@Param("bot_id") botId: Long, @Param state: String): List<TaskDtoResponse>
+        override fun update(taskId: Long, task: CreateTaskRequest): TaskResponse {
+          return TaskResponse("error", TaskState.FAILED, LocalDate.MIN)
+        }
+
+        override fun delete(taskId: Long) {
+        }
+      }
+    }
+  }
 }

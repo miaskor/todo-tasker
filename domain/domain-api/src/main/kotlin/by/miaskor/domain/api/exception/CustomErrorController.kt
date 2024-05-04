@@ -1,6 +1,6 @@
-package by.miaskor.domain.api.exceptions
+package by.miaskor.domain.api.exception
 
-import by.miaskor.domain.dto.ErrorDto
+import by.miaskor.domain.model.ErrorDto
 import org.springframework.boot.web.error.ErrorAttributeOptions
 import org.springframework.boot.web.servlet.error.ErrorAttributes
 import org.springframework.boot.web.servlet.error.ErrorController
@@ -11,10 +11,10 @@ import org.springframework.web.context.request.WebRequest
 
 @Controller
 class CustomErrorController(
-  private val errorAttributes: ErrorAttributes
+  private val errorAttributes: ErrorAttributes,
 ) : ErrorController {
 
-  @RequestMapping(PATH)
+  @RequestMapping("/error")
   fun error(webRequest: WebRequest): ResponseEntity<ErrorDto> {
     val attributes = errorAttributes.getErrorAttributes(
       webRequest,
@@ -31,9 +31,5 @@ class CustomErrorController(
           errorDescription = attributes["message"] as String
         )
       )
-  }
-
-  companion object {
-    private const val PATH = "/error"
   }
 }

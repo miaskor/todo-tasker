@@ -1,6 +1,7 @@
 package by.miaskor.token.controller
 
 import by.miaskor.domain.connector.ClientConnector
+import by.miaskor.domain.model.client.ClientRequest
 import by.miaskor.token.connector.domain.ClientAuthDtoRequest
 import by.miaskor.token.connector.domain.TokenDto
 import by.miaskor.token.security.TokenProvider
@@ -19,16 +20,17 @@ class TokenController(
 ) {
   @PostMapping("/create/token")
   fun createToken(@RequestBody clientAuthDtoRequest: ClientAuthDtoRequest): ResponseEntity<Map<String, String>> {
-    val client = clientConnector.getByLoginAndPassword(
-      clientAuthDtoRequest.login,
-      clientAuthDtoRequest.password
+    val client = clientConnector.getBy(
+      ClientRequest(
+        login = clientAuthDtoRequest.login,
+        password = clientAuthDtoRequest.password
+      )
     )
 
     val token = tokenProvider.createToken(clientAuthDtoRequest)
     return ResponseEntity.ok(
       mapOf(
         Pair("name", clientAuthDtoRequest.login),
-        Pair("clientId", client.id.toString()),
         Pair("token", token)
       )
     )

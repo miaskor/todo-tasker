@@ -1,9 +1,10 @@
 dependencies {
   implementation libs.feign.core
   implementation libs.feign.jackson
-  implementation libs.spring.context
+  implementation libs.feign.hystrix
   implementation libs.jackson.kotlin
   implementation libs.jackson.jsr310
+  implementation libs.jakarta.validation
 }
 
 
