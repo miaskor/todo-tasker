@@ -21,7 +21,7 @@ open class TaskEntity(
   open val id: Long = -1,
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "client_id")
-  open val client: ClientEntity? = ClientEntity(),
+  open val client: ClientEntity = ClientEntity(),
   open val date: LocalDate = LocalDate.now(),
   open val taskName: String = "",
   @Enumerated(EnumType.STRING)

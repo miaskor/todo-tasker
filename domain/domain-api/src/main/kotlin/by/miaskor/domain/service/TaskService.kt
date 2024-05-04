@@ -55,7 +55,7 @@ open class TaskService(
 
     return TaskEntity(
       id = taskEntity.id,
-      client = ClientEntity(id = updateTaskRequest.clientId ?: taskEntity.client!!.id),
+      client = ClientEntity(id = updateTaskRequest.clientId ?: taskEntity.client.id),
       taskName = updateTaskRequest.taskName ?: taskEntity.taskName,
       date = updateTaskRequest.date ?: taskEntity.date,
       taskState = updateTaskRequest.taskState ?: taskEntity.taskState
