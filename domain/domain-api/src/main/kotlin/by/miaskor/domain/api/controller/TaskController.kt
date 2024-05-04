@@ -1,6 +1,6 @@
 package by.miaskor.domain.api.controller
 
-import by.miaskor.domain.factory.TaskDtoResponseFactory
+import by.miaskor.domain.factory.TaskResponseFactory
 import by.miaskor.domain.model.task.CreateTaskRequest
 import by.miaskor.domain.model.task.SearchTaskRequest
 import by.miaskor.domain.model.task.TaskResponse
@@ -22,14 +22,14 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/tasks")
 open class TaskController(
-  private val taskDtoResponseFactory: TaskDtoResponseFactory,
+  private val taskResponseFactory: TaskResponseFactory,
   private val taskService: TaskService,
 ) {
 
   @PostMapping("/search")
   fun search(@RequestBody searchTaskRequest: SearchTaskRequest): List<TaskResponse> {
     return taskService.search(searchTaskRequest)
-      .map(taskDtoResponseFactory::makeTaskDtoResponse)
+      .map(taskResponseFactory::makeTaskResponse)
       .toList()
   }
 
@@ -37,13 +37,13 @@ open class TaskController(
   @ResponseStatus(CREATED)
   fun create(@RequestBody createTaskRequest: CreateTaskRequest): TaskResponse {
     return taskService.create(createTaskRequest)
-      .let(taskDtoResponseFactory::makeTaskDtoResponse)
+      .let(taskResponseFactory::makeTaskResponse)
   }
 
   @PatchMapping("/{id}")
   fun update(@PathVariable("id") id: Long, @RequestBody updateTaskRequest: UpdateTaskRequest): TaskResponse {
     return taskService.updateById(id, updateTaskRequest)
-      .let(taskDtoResponseFactory::makeTaskDtoResponse)
+      .let(taskResponseFactory::makeTaskResponse)
   }
 
   @DeleteMapping("/{id}")
@@ -54,7 +54,7 @@ open class TaskController(
   @GetMapping
   fun getAllByClientId(@RequestParam("client_id") clientId: Long, pageable: Pageable): List<TaskResponse> {
     return taskService.getAllByClientIdWithPagination(clientId, pageable)
-      .map(taskDtoResponseFactory::makeTaskDtoResponse)
+      .map(taskResponseFactory::makeTaskResponse)
       .toList()
   }
 }

@@ -1,6 +1,6 @@
 package by.miaskor.domain.api.controller
 
-import by.miaskor.domain.factory.ClientDtoResponseFactory
+import by.miaskor.domain.factory.ClientResponseFactory
 import by.miaskor.domain.model.client.ClientRequest
 import by.miaskor.domain.model.client.ClientResponse
 import by.miaskor.domain.model.client.CreateClientRequest
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/clients")
 open class ClientController(
   private val clientService: ClientService,
-  private val clientDtoResponseFactory: ClientDtoResponseFactory,
+  private val clientResponseFactory: ClientResponseFactory,
 ) {
 
   @PostMapping
@@ -32,19 +32,19 @@ open class ClientController(
     @Validated createClientRequest: CreateClientRequest,
   ): ClientResponse {
     return clientService.create(createClientRequest)
-      .let(clientDtoResponseFactory::makeClientDtoResponse)
+      .let(clientResponseFactory::makeClientResponse)
   }
 
   @GetMapping("/{id}")
   fun get(@PathVariable id: Long): ClientResponse {
     return clientService.getById(id)
-      .let(clientDtoResponseFactory::makeClientDtoResponse)
+      .let(clientResponseFactory::makeClientResponse)
   }
 
   @PostMapping("/search")
   fun search(@RequestBody clientRequest: ClientRequest): ClientResponse {
     return clientService.search(clientRequest)
-      .let(clientDtoResponseFactory::makeClientDtoResponse)
+      .let(clientResponseFactory::makeClientResponse)
   }
 
   @PatchMapping("/{id}")
@@ -53,7 +53,7 @@ open class ClientController(
     @RequestBody clientRequest: ClientRequest,
   ): ClientResponse {
     return clientService.updateById(id, clientRequest)
-      .let(clientDtoResponseFactory::makeClientDtoResponse)
+      .let(clientResponseFactory::makeClientResponse)
   }
 
   @DeleteMapping("/{id}")

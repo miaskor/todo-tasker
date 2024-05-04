@@ -5,9 +5,9 @@ import by.miaskor.domain.store.entity.ClientEntity
 import org.springframework.stereotype.Component
 
 @Component
-class ClientDtoResponseFactory {
+class ClientResponseFactory {
 
-  fun makeClientDtoResponse(clientEntity: ClientEntity): ClientResponse {
+  fun makeClientResponse(clientEntity: ClientEntity): ClientResponse {
     return ClientResponse(
       email = clientEntity.email,
       login = clientEntity.login,

@@ -5,9 +5,9 @@ import by.miaskor.domain.store.entity.TaskEntity
 import org.springframework.stereotype.Component
 
 @Component
-class TaskDtoResponseFactory {
+class TaskResponseFactory {
 
-  fun makeTaskDtoResponse(taskEntity: TaskEntity): TaskResponse {
+  fun makeTaskResponse(taskEntity: TaskEntity): TaskResponse {
     return TaskResponse(
       taskName = taskEntity.taskName,
       taskState = taskEntity.taskState,
