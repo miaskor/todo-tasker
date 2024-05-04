@@ -1,7 +1,7 @@
 package by.miaskor.domain.api.exception
 
-import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.web.bind.annotation.ResponseStatus
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
-class BadRequestException(message: String?) : RuntimeException(message)
+@ResponseStatus(BAD_REQUEST)
+open class BadRequestException(message: String?) : RuntimeException(message)

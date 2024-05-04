@@ -8,9 +8,11 @@ import by.miaskor.domain.model.client.CreateClientRequest
 import by.miaskor.domain.store.entity.ClientEntity
 import by.miaskor.domain.store.repository.ClientRepository
 import by.miaskor.domain.store.repository.specification.ClientSpecificationFactory
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.*
 
 @Service
 @Transactional
@@ -23,7 +25,8 @@ open class ClientService(
   open fun create(createClientRequest: CreateClientRequest): ClientEntity {
     val (email, login, password, botId) = createClientRequest
 
-    clientRepository.findByEmailOrLogin(email, login)
+    clientSpecificationFactory.createFindAllBy(ClientRequest(login = login, email = email))
+      .let(clientRepository::findOne)
       .ifPresent { clientEntity -> throwExceptionIfExists(clientEntity, createClientRequest) }
 
     return ClientEntity(
@@ -61,13 +64,15 @@ open class ClientService(
     if (clientRequest.isEmpty()) throw ClientNotFoundException("object" to clientRequest)
 
     val clientEntity = getById(id)
-      .let {
+      .let { existedEntity ->
         ClientEntity(
           id = id,
-          email = clientRequest.email ?: it.email,
-          login = clientRequest.login ?: it.login,
-          botId = clientRequest.botId ?: it.botId,
-          password = if (clientRequest.password != null) passwordEncoder.encode(clientRequest.password) else it.password
+          email = clientRequest.email ?: existedEntity.email,
+          login = clientRequest.login ?: existedEntity.login,
+          botId = clientRequest.botId ?: existedEntity.botId,
+          password = Optional.ofNullable(clientRequest.password)
+            .map(passwordEncoder::encode)
+            .orElse(existedEntity.password)
         )
       }
 
@@ -76,7 +81,11 @@ open class ClientService(
     return clientEntity
   }
 
-  open fun getAndDelete(id: Long) {
-    clientRepository.deleteById(id)
+  open fun delete(id: Long) {
+    try {
+      clientRepository.deleteById(id)
+    } catch (exception: EmptyResultDataAccessException) {
+      throw ClientNotFoundException("id" to id)
+    }
   }
 }

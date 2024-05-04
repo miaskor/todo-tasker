@@ -1,14 +1,9 @@
 package com.miaskor.todo.spring.config;
 
 import by.miaskor.domain.connector.ClientConnector;
+import by.miaskor.domain.connector.ClientConnector.ClientConnectorFallbackFactory;
 import by.miaskor.domain.connector.TaskConnector;
-import by.miaskor.domain.model.client.ClientRequest;
-import by.miaskor.domain.model.client.ClientResponse;
-import by.miaskor.domain.model.client.CreateClientRequest;
-import by.miaskor.domain.model.task.CreateTaskRequest;
-import by.miaskor.domain.model.task.SearchTaskRequest;
-import by.miaskor.domain.model.task.TaskResponse;
-import by.miaskor.domain.model.task.TaskState;
+import by.miaskor.domain.connector.TaskConnector.TaskConnectorFallbackFactory;
 import by.miaskor.token.connector.connector.TokenConnector;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -21,10 +16,6 @@ import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import feign.slf4j.Slf4jLogger;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,36 +44,7 @@ public class ConnectorsConfig {
         .encoder(new JacksonEncoder(objectMapper()))
         .logger(new Slf4jLogger(ClientConnector.class))
         .logLevel(Logger.Level.FULL)
-        .target(ClientConnector.class, urlDomainClientConnector, new ClientConnector() {
-          @NotNull
-          @Override
-          public ClientResponse createClient(@NotNull CreateClientRequest createClientRequest) {
-            return new ClientResponse();
-          }
-
-          @NotNull
-          @Override
-          public ClientResponse getBy(@NotNull ClientRequest clientRequest) {
-            return new ClientResponse();
-          }
-
-          @NotNull
-          @Override
-          public ClientResponse getById(long clientId) {
-            return new ClientResponse();
-          }
-
-          @NotNull
-          @Override
-          public ClientResponse update(long clientId, @NotNull ClientRequest clientRequest) {
-            return new ClientResponse();
-          }
-
-          @Override
-          public void delete(long clientId) {
-
-          }
-        });
+        .target(ClientConnector.class, urlDomainClientConnector, new ClientConnectorFallbackFactory());
   }
 
   @Bean
@@ -93,37 +55,7 @@ public class ConnectorsConfig {
         .encoder(new JacksonEncoder(objectMapper()))
         .logger(new Slf4jLogger(TaskConnector.class))
         .logLevel(Logger.Level.FULL)
-        .target(TaskConnector.class, urlDomainTaskConnector, new TaskConnector() {
-
-          @NotNull
-          @Override
-          public List<TaskResponse> getAllByClientId(int clientId) {
-            return new ArrayList<>();
-          }
-
-          @NotNull
-          @Override
-          public TaskResponse create(@NotNull CreateTaskRequest task) {
-            return new TaskResponse("", TaskState.FAILED, LocalDate.now());
-          }
-
-          @NotNull
-          @Override
-          public List<TaskResponse> getBy(@NotNull SearchTaskRequest searchTaskRequest) {
-            return List.of();
-          }
-
-          @NotNull
-          @Override
-          public TaskResponse update(long taskId, @NotNull CreateTaskRequest task) {
-            return new TaskResponse("", TaskState.FAILED, LocalDate.now());
-          }
-
-          @Override
-          public void delete(long taskId) {
-
-          }
-        });
+        .target(TaskConnector.class, urlDomainTaskConnector, new TaskConnectorFallbackFactory());
   }
 
   //TODO(Get Exception when token is expired. And user will get exception on web browser)

@@ -5,9 +5,11 @@ import by.miaskor.domain.api.exception.TaskNotFoundException
 import by.miaskor.domain.model.task.CreateTaskRequest
 import by.miaskor.domain.model.task.SearchTaskRequest
 import by.miaskor.domain.model.task.UpdateTaskRequest
+import by.miaskor.domain.store.entity.ClientEntity
 import by.miaskor.domain.store.entity.TaskEntity
 import by.miaskor.domain.store.repository.TaskRepository
 import by.miaskor.domain.store.repository.specification.TaskSpecificationFactory
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -34,7 +36,7 @@ open class TaskService(
     return clientService.getById(createTaskRequest.clientId)
       .let { clientEntity ->
         TaskEntity(
-          clientId = clientEntity.id,
+          client = ClientEntity(id = clientEntity.id),
           taskName = createTaskRequest.taskName,
           date = createTaskRequest.date,
           taskState = createTaskRequest.taskState
@@ -44,16 +46,16 @@ open class TaskService(
   }
 
   open fun updateById(id: Long, updateTaskRequest: UpdateTaskRequest): TaskEntity {
-    val taskEntity = taskRepository.findById(id)
-      .orElseThrow { TaskNotFoundException("id" to id) }
-
     Optional.ofNullable(updateTaskRequest.clientId)
       .map(clientService::getById)
       .get()
 
+    val taskEntity = taskRepository.findById(id)
+      .orElseThrow { TaskNotFoundException("id" to id) }
+
     return TaskEntity(
       id = taskEntity.id,
-      clientId = updateTaskRequest.clientId ?: taskEntity.clientId,
+      client = ClientEntity(id = updateTaskRequest.clientId ?: taskEntity.client!!.id),
       taskName = updateTaskRequest.taskName ?: taskEntity.taskName,
       date = updateTaskRequest.date ?: taskEntity.date,
       taskState = updateTaskRequest.taskState ?: taskEntity.taskState
@@ -62,14 +64,16 @@ open class TaskService(
   }
 
   open fun deleteById(id: Long) {
-    taskRepository.findById(id)
-      .orElseThrow { TaskNotFoundException("id" to id) }
-
-    taskRepository.deleteById(id)
+    try {
+      taskRepository.deleteById(id)
+    } catch (exception: EmptyResultDataAccessException) {
+      throw TaskNotFoundException("id" to id)
+    }
   }
 
   open fun getAllByClientIdWithPagination(clientId: Long, pageable: Pageable): Sequence<TaskEntity> {
-    return taskRepository.findAllByClientId(clientId, pageable)
+    return taskSpecificationFactory.createFindAllBy(SearchTaskRequest(clientId = clientId))
+      .let { specification -> taskRepository.findAll(specification, pageable) }
       .asSequence()
   }
 }

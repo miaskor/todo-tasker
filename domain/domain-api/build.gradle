@@ -8,7 +8,6 @@ dependencies {
   implementation libs.jackson.jsr310
   implementation libs.postgresql
   implementation libs.kotlin.reflect
-  annotationProcessor libs.hibernate.genmodel
 
   testImplementation libs.junit5.api
   testRuntimeOnly libs.junit5.engine

@@ -41,7 +41,6 @@ starter-validation = { module = "org.springframework.boot:spring-boot-starter-va
 jackson-jsr310     = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"                 }
 jackson-kotlin     = { module = "com.fasterxml.jackson.module:jackson-module-kotlin"                     }
 jakarta-validation = { module = "jakarta.validation:jakarta.validation-api", version.ref = "jakarta"     }
-hibernate-genmodel = { module = "org.hibernate:hibernate-jpamodelgen",      version.ref = "hibernate"    }
 
 [plugins]
 kotlin-jvm                   = { id = "org.jetbrains.kotlin.jvm",        version.ref = "kotlin"      }

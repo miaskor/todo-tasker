@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/tasks")
+@RequestMapping("/api/v1/tasks")
 open class TaskController(
   private val taskDtoResponseFactory: TaskDtoResponseFactory,
   private val taskService: TaskService,

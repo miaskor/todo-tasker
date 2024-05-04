@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/clients")
+@RequestMapping("/api/v1/clients")
 open class ClientController(
   private val clientService: ClientService,
   private val clientDtoResponseFactory: ClientDtoResponseFactory,
@@ -47,9 +47,6 @@ open class ClientController(
       .let(clientDtoResponseFactory::makeClientDtoResponse)
   }
 
-  //If I create GET request with ?login=qwe&password=qwe&email=qweq, interesting example
-  //Password must be placed in body - so use POST request
-
   @PatchMapping("/{id}")
   fun patch(
     @PathVariable id: Long,
@@ -62,6 +59,6 @@ open class ClientController(
   @DeleteMapping("/{id}")
   @ResponseStatus(NO_CONTENT)
   fun delete(@PathVariable id: Long) {
-    clientService.getAndDelete(id)
+    clientService.delete(id)
   }
 }

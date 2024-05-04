@@ -6,6 +6,7 @@ import by.miaskor.domain.model.client.CreateClientRequest
 import feign.Headers
 import feign.Param
 import feign.RequestLine
+import feign.hystrix.FallbackFactory
 
 @Headers(value = ["Content-type: application/json"])
 interface ClientConnector {
@@ -24,4 +25,32 @@ interface ClientConnector {
 
   @RequestLine("DELETE /{id}")
   fun delete(@Param("id") clientId: Long)
+
+  class ClientConnectorFallbackFactory : FallbackFactory<ClientConnector> {
+    override fun create(p0: Throwable?): ClientConnector {
+      return object : ClientConnector {
+        override fun getBy(clientRequest: ClientRequest): ClientResponse {
+          return ClientResponse()
+        }
+
+        override fun createClient(createClientRequest: CreateClientRequest): ClientResponse {
+          return ClientResponse()
+        }
+
+        override fun getById(clientId: Long): ClientResponse {
+          return ClientResponse()
+        }
+
+        override fun update(clientId: Long, clientRequest: ClientRequest): ClientResponse {
+          return ClientResponse()
+        }
+
+        override fun delete(clientId: Long) {
+        }
+      }
+    }
+  }
+
 }
+
+

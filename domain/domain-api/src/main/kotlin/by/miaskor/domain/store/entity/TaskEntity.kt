@@ -2,7 +2,6 @@ package by.miaskor.domain.store.entity
 
 import by.miaskor.domain.model.task.TaskState
 import java.time.LocalDate
-import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
@@ -16,21 +15,19 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "task")
-data class TaskEntity(
+open class TaskEntity(
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  val id: Long = -1,
-  //TODO(FIX THIS ASAP)
+  open val id: Long = -1,
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "client_id", updatable = false, insertable = false)
-  val client: ClientEntity? = null,
-  @Column(name = "client_id")
-  val clientId: Long? = null,
-  val date: LocalDate = LocalDate.now(),
-  val taskName: String = "",
+  @JoinColumn(name = "client_id")
+  open val client: ClientEntity? = ClientEntity(),
+  open val date: LocalDate = LocalDate.now(),
+  open val taskName: String = "",
   @Enumerated(EnumType.STRING)
-  val taskState: TaskState = TaskState.UPCOMING,
+  open val taskState: TaskState = TaskState.UPCOMING,
 ) {
+
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
     if (javaClass != other?.javaClass) return false
