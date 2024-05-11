@@ -1,6 +1,7 @@
 package com.miaskor.todo.spring.controller;
 
 import by.miaskor.domain.connector.TaskConnector;
+import by.miaskor.domain.model.Result;
 import by.miaskor.domain.model.task.CreateTaskRequest;
 import by.miaskor.domain.model.task.SearchTaskRequest;
 import by.miaskor.domain.model.task.TaskResponse;
@@ -45,22 +46,27 @@ public class TaskController {
       @RequestParam("date_to") String dateTo
   ) {
     int clientId = Integer.parseInt(httpSession.getAttribute("clientId").toString());
-    List<TaskResponse> taskResponses = taskConnector.getBy(new SearchTaskRequest(
+    List<Result<TaskResponse>> taskResponses = taskConnector.getBy(new SearchTaskRequest(
         Long.valueOf(-1), Long.valueOf(clientId), TaskState.FAILED, LocalDate.parse(dateFrom), LocalDate.parse(dateTo)
     ));
-    return taskResponses.stream()
+    return taskResponses
+        .stream()
+        .map(Result::getData)
         .collect(Collectors.groupingBy(taskResponse -> taskResponse.getDate().toString()));
   }
 
   @GetMapping("/all")
   public List<TaskResponse> getAllByClientIdAndDateBetween(
       @RequestParam("client_id") Integer clientId) {
-    return taskConnector.getAllByClientId(clientId);
+    return taskConnector.getAllByClientId(clientId)
+        .stream()
+        .map(Result::getData)
+        .toList();
   }
 
   @PatchMapping("/update/{id}")
   public TaskResponse update(@PathVariable("id") Integer taskId, @RequestBody CreateTaskRequest task) {
-    return taskConnector.update(taskId, task);
+    return taskConnector.update(taskId, task).getData();
   }
 
   @DeleteMapping("/{id}")

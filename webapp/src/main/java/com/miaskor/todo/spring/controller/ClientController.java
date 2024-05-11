@@ -28,11 +28,11 @@ public class ClientController {
       @PathVariable("id") Integer clientId,
       @RequestBody ClientRequest clientRequest
   ) {
-    return clientConnector.update(clientId, clientRequest);
+    return clientConnector.update(clientId, clientRequest).getData();
   }
 
   @GetMapping("/{id}")
   public ClientResponse getById(@PathVariable("id") Integer clientId) {
-    return clientConnector.getById(clientId);
+    return clientConnector.getById(clientId).getData();
   }
 }

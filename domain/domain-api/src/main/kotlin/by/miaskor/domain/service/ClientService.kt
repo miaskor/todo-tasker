@@ -8,6 +8,8 @@ import by.miaskor.domain.model.client.CreateClientRequest
 import by.miaskor.domain.store.entity.ClientEntity
 import by.miaskor.domain.store.repository.ClientRepository
 import by.miaskor.domain.store.repository.specification.ClientSpecificationFactory
+import org.hibernate.exception.ConstraintViolationException
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -63,20 +65,32 @@ open class ClientService(
   open fun updateById(id: Long, clientRequest: ClientRequest): ClientEntity {
     if (clientRequest.isEmpty()) throw ClientNotFoundException("object" to clientRequest)
 
-    val clientEntity = getById(id)
-      .let { existedEntity ->
-        ClientEntity(
-          id = id,
-          email = clientRequest.email ?: existedEntity.email,
-          login = clientRequest.login ?: existedEntity.login,
-          botId = clientRequest.botId ?: existedEntity.botId,
-          password = Optional.ofNullable(clientRequest.password)
-            .map(passwordEncoder::encode)
-            .orElse(existedEntity.password)
-        )
-      }
+    val existedEntity = getById(id)
+    val clientEntity = ClientEntity(
+      id = id,
+      email = clientRequest.email ?: existedEntity.email,
+      login = clientRequest.login ?: existedEntity.login,
+      botId = clientRequest.botId ?: existedEntity.botId,
+      password = Optional.ofNullable(clientRequest.password)
+        .map(passwordEncoder::encode)
+        .orElse(existedEntity.password)
+    )
+    try {
+      clientRepository.saveAndFlush(clientEntity)
+    } catch (exception: DataIntegrityViolationException) {
+      val constraintViolationException = exception.cause as ConstraintViolationException
 
-    clientRepository.saveAndFlush(clientEntity)
+      when {
+        constraintViolationException.sqlException.message?.contains("email") == true ->
+          throw EmailAlreadyOccupiedException(existedEntity.email, exception.cause)
+
+        constraintViolationException.sqlException.message?.contains("login") == true ->
+          throw LoginAlreadyOccupiedException(existedEntity.login, exception.cause)
+
+        else -> throw exception
+      }
+    }
+
 
     return clientEntity
   }

@@ -1,5 +1,6 @@
 package by.miaskor.domain.connector
 
+import by.miaskor.domain.model.Result
 import by.miaskor.domain.model.client.ClientRequest
 import by.miaskor.domain.model.client.ClientResponse
 import by.miaskor.domain.model.client.CreateClientRequest
@@ -12,16 +13,16 @@ import feign.hystrix.FallbackFactory
 interface ClientConnector {
 
   @RequestLine("POST /search")
-  fun getBy(clientRequest: ClientRequest): ClientResponse
+  fun getBy(clientRequest: ClientRequest): Result<ClientResponse>
 
   @RequestLine("POST /")
-  fun createClient(createClientRequest: CreateClientRequest): ClientResponse
+  fun createClient(createClientRequest: CreateClientRequest): Result<ClientResponse>
 
   @RequestLine("GET /{id}")
-  fun getById(@Param("id") clientId: Long): ClientResponse
+  fun getById(@Param("id") clientId: Long): Result<ClientResponse>
 
   @RequestLine("PATCH /{id}")
-  fun update(@Param("id") clientId: Long, clientRequest: ClientRequest): ClientResponse
+  fun update(@Param("id") clientId: Long, clientRequest: ClientRequest): Result<ClientResponse>
 
   @RequestLine("DELETE /{id}")
   fun delete(@Param("id") clientId: Long)
@@ -29,20 +30,20 @@ interface ClientConnector {
   class ClientConnectorFallbackFactory : FallbackFactory<ClientConnector> {
     override fun create(p0: Throwable?): ClientConnector {
       return object : ClientConnector {
-        override fun getBy(clientRequest: ClientRequest): ClientResponse {
-          return ClientResponse()
+        override fun getBy(clientRequest: ClientRequest): Result<ClientResponse> {
+          return Result()
         }
 
-        override fun createClient(createClientRequest: CreateClientRequest): ClientResponse {
-          return ClientResponse()
+        override fun createClient(createClientRequest: CreateClientRequest): Result<ClientResponse> {
+          return Result()
         }
 
-        override fun getById(clientId: Long): ClientResponse {
-          return ClientResponse()
+        override fun getById(clientId: Long): Result<ClientResponse> {
+          return Result()
         }
 
-        override fun update(clientId: Long, clientRequest: ClientRequest): ClientResponse {
-          return ClientResponse()
+        override fun update(clientId: Long, clientRequest: ClientRequest): Result<ClientResponse> {
+          return Result()
         }
 
         override fun delete(clientId: Long) {
@@ -50,7 +51,6 @@ interface ClientConnector {
       }
     }
   }
-
 }
 
 

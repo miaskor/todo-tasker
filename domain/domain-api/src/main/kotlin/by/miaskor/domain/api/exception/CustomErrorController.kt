@@ -1,6 +1,7 @@
 package by.miaskor.domain.api.exception
 
-import by.miaskor.domain.model.ErrorDto
+import by.miaskor.domain.model.ErrorResult
+import by.miaskor.domain.model.Result
 import org.springframework.boot.web.error.ErrorAttributeOptions
 import org.springframework.boot.web.servlet.error.ErrorAttributes
 import org.springframework.boot.web.servlet.error.ErrorController
@@ -15,7 +16,7 @@ class CustomErrorController(
 ) : ErrorController {
 
   @RequestMapping("/error")
-  fun error(webRequest: WebRequest): ResponseEntity<ErrorDto> {
+  fun error(webRequest: WebRequest): ResponseEntity<Result<*>> {
     val attributes = errorAttributes.getErrorAttributes(
       webRequest,
       ErrorAttributeOptions.of(
@@ -23,13 +24,16 @@ class CustomErrorController(
         ErrorAttributeOptions.Include.MESSAGE
       )
     )
-    return ResponseEntity
-      .status(attributes["status"] as Int)
-      .body(
-        ErrorDto(
-          error = attributes["error"] as String,
-          errorDescription = attributes["message"] as String
-        )
+    val statusCode = attributes["status"] as Int
+    val errorMessage = attributes["message"] as String
+    val result = Result<Any>(
+      error = ErrorResult(
+        code = statusCode,
+        detail = errorMessage
       )
+    )
+    return ResponseEntity
+      .status(statusCode)
+      .body(result)
   }
 }
