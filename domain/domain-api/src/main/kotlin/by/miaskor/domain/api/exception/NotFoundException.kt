@@ -9,5 +9,5 @@ private fun parseFields(fieldToValue: Map<String, Any?>): String {
 }
 
 @ResponseStatus(NOT_FOUND)
-open class NotFoundException(fieldToValue: Map<String, Any?>, message: String) : RuntimeException
-  ("$message, ${parseFields(fieldToValue)}")
+open class NotFoundException(fieldToValue: Map<String, Any?>, message: String, cause: Throwable? = null) :
+  RuntimeException("$message, ${parseFields(fieldToValue)}", cause)

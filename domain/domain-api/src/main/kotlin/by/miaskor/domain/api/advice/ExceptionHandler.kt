@@ -1,4 +1,4 @@
-package by.miaskor.domain.api.exception
+package by.miaskor.domain.api.advice
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -7,7 +7,7 @@ import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 
 @RestControllerAdvice
-class CustomExceptionHandler : ResponseEntityExceptionHandler() {
+class ExceptionHandler : ResponseEntityExceptionHandler() {
 
   @ExceptionHandler(Exception::class)
   fun exception(exception: Exception, webRequest: WebRequest): ResponseEntity<Any>? {
