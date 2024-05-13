@@ -5,9 +5,11 @@ dependencies {
   implementation libs.starter.web
   implementation libs.starter.data.jpa
   implementation libs.starter.validation
+  implementation libs.starter.actuator
   implementation libs.jackson.jsr310
   implementation libs.postgresql
   implementation libs.kotlin.reflect
+  implementation libs.prometheus
 
   testImplementation libs.junit5.api
   testRuntimeOnly libs.junit5.engine

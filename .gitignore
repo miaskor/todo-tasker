@@ -10,3 +10,6 @@
 /token/token-service/build/
 /token/token-connector/build/
 /webapp/build/
+/grafana
+/prometheus
+/config
