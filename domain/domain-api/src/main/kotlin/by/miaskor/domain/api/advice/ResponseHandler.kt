@@ -8,7 +8,7 @@ import org.springframework.http.server.ServerHttpRequest
 import org.springframework.http.server.ServerHttpResponse
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice
-import java.util.Optional
+import java.util.*
 
 @RestControllerAdvice
 class ResponseHandler : ResponseBodyAdvice<Any> {
@@ -21,9 +21,13 @@ class ResponseHandler : ResponseBodyAdvice<Any> {
     selectedConverterType: Class<out HttpMessageConverter<*>>,
     request: ServerHttpRequest,
     response: ServerHttpResponse,
-  ) :Any{
-    return Optional.ofNullable(body)
-      .filter { it is Result<*> }
-      .orElseGet { Result(body) }
+  ): Any? {
+    return if(request.uri.rawPath.contains("actuator")){
+      body
+    }else{
+      Optional.ofNullable(body)
+        .filter { it is Result<*> }
+        .orElseGet { Result(body) }
+    }
   }
 }

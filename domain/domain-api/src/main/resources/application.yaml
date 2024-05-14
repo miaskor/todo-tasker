@@ -2,8 +2,10 @@ server:
   port: 8080
 
 spring:
+  application:
+    name: domain-api
   datasource:
-    url: jdbc:postgresql://domain-api:5433/to_do
+    url: jdbc:postgresql://db-postgres:5432/to_do
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -11,3 +13,18 @@ spring:
     database: POSTGRESQL
     show-sql: true
     open-in-view: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    export:
+      prometheus:
+        enabled: true
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
