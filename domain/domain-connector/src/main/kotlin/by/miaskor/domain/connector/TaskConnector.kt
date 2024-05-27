@@ -1,6 +1,6 @@
 package by.miaskor.domain.connector
 
-import by.miaskor.domain.model.Result
+import by.miaskor.common.exception.handler.model.Result
 import by.miaskor.domain.model.task.CreateTaskRequest
 import by.miaskor.domain.model.task.SearchTaskRequest
 import by.miaskor.domain.model.task.TaskResponse

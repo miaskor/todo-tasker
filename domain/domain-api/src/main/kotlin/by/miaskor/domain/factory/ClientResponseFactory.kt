@@ -11,6 +11,9 @@ class ClientResponseFactory {
     return ClientResponse(
       email = clientEntity.email,
       login = clientEntity.login,
+      type = clientEntity.type,
+      blocked = clientEntity.blocked,
+      password = clientEntity.password
     )
   }
 }

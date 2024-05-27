@@ -9,5 +9,6 @@ include(
     ':token:token-service',
     ':token:token-connector',
     ':webapp',
-    ':telegram-bot'
+    ':telegram-bot',
+    ':common:exception-handler',
 )

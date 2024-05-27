@@ -3,3 +3,6 @@ token:
   expiredAt: 3600000
 server:
   port: 8082
+
+domain-api-connector:
+  baseURL: "http://domain-api:8080/api/v1/clients"

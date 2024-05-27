@@ -1,5 +1,6 @@
 dependencies {
   implementation projects.domain.domainConnector
+  implementation projects.common.exceptionHandler
 
   implementation libs.ss.core
   implementation libs.starter.web

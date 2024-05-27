@@ -1,6 +1,6 @@
-package by.miaskor.domain.api.advice
+package by.miaskor.common.exception.handler.advice
 
-import by.miaskor.domain.model.Result
+import by.miaskor.common.exception.handler.model.Result
 import org.springframework.core.MethodParameter
 import org.springframework.http.MediaType
 import org.springframework.http.converter.HttpMessageConverter
@@ -22,9 +22,9 @@ class ResponseHandler : ResponseBodyAdvice<Any> {
     request: ServerHttpRequest,
     response: ServerHttpResponse,
   ): Any? {
-    return if(request.uri.rawPath.contains("actuator")){
+    return if (request.uri.rawPath.contains("actuator")) {
       body
-    }else{
+    } else {
       Optional.ofNullable(body)
         .filter { it is Result<*> }
         .orElseGet { Result(body) }

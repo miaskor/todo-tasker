@@ -1,6 +1,7 @@
 dependencies {
   implementation projects.domain.domainConnector
   implementation projects.token.tokenConnector
+  implementation projects.common.exceptionHandler
 
   implementation libs.starter.web
   implementation libs.starter.security

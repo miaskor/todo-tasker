@@ -1,4 +1,4 @@
-package by.miaskor.domain.api.advice
+package by.miaskor.common.exception.handler.advice
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler

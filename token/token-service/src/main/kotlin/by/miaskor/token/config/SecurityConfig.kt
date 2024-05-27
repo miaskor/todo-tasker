@@ -51,6 +51,7 @@ open class SecurityConfig(
     http
       .httpBasic().disable()
       .csrf().disable()
+      .
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
       .and()
       .authorizeRequests().anyRequest().permitAll()

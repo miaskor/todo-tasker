@@ -1,7 +1,7 @@
-package by.miaskor.domain.api.exception
+package by.miaskor.common.exception.handler.controller
 
-import by.miaskor.domain.model.ErrorResult
-import by.miaskor.domain.model.Result
+import by.miaskor.common.exception.handler.model.ErrorResult
+import by.miaskor.common.exception.handler.model.Result
 import org.springframework.boot.web.error.ErrorAttributeOptions
 import org.springframework.boot.web.servlet.error.ErrorAttributes
 import org.springframework.boot.web.servlet.error.ErrorController

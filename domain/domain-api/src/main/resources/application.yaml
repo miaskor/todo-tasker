@@ -5,7 +5,7 @@ spring:
   application:
     name: domain-api
   datasource:
-    url: jdbc:postgresql://db-postgres:5432/to_do
+    url: jdbc:postgresql://localhost:5433/to_do
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver

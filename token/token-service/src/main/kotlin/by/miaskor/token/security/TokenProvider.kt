@@ -1,7 +1,7 @@
 package by.miaskor.token.security
 
 import by.miaskor.token.connector.domain.ClientAuthDtoRequest
-import by.miaskor.token.exception.CustomAuthenticationException
+import by.miaskor.token.exception.AuthenticationException
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -34,7 +34,7 @@ class TokenProvider(
       getAuthentication(token)
       claims.after(Date())
     } catch (e: Exception) {
-      throw CustomAuthenticationException("JWT token is expired or invalid")
+      throw AuthenticationException("JWT token is expired or invalid")
     }
   }
 

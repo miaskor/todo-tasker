@@ -1,4 +1,4 @@
-package by.miaskor.domain.model
+package by.miaskor.common.exception.handler.model
 
 data class Result<T>(
   val data: T? = null,

@@ -1,40 +1,39 @@
 package by.miaskor.token.security
 
+import by.miaskor.domain.model.client.ClientResponse
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
-data class User(
-  val login: String,
-  val email: String,
-  val user_password: String,
+data class SecurityClient(
+  val clientResponse: ClientResponse,
 ) : UserDetails {
 
   override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-    return mutableListOf()
+    return mutableListOf(clientResponse.type)
   }
 
   override fun getPassword(): String {
-    return user_password
+    return clientResponse.password
   }
 
   override fun getUsername(): String {
-    return login
+    return clientResponse.login
   }
 
   override fun isAccountNonExpired(): Boolean {
-    return true
+    return clientResponse.blocked.not()
   }
 
   override fun isAccountNonLocked(): Boolean {
-    return true
+    return clientResponse.blocked.not()
   }
 
   override fun isCredentialsNonExpired(): Boolean {
-    return true
+    return clientResponse.blocked.not()
   }
 
   override fun isEnabled(): Boolean {
-    return true
+    return clientResponse.blocked.not()
   }
 }
 
