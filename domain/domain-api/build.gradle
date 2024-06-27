@@ -9,6 +9,7 @@ dependencies {
   implementation libs.starter.actuator
   implementation libs.jackson.jsr310
   implementation libs.postgresql
+  implementation libs.liquibase.core
   implementation libs.kotlin.reflect
   implementation libs.prometheus
 
