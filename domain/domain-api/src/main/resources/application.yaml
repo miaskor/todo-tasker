@@ -13,6 +13,8 @@ spring:
     database: POSTGRESQL
     show-sql: true
     open-in-view: false
+  liquibase:
+    change-log: db/db.changelog-master.yml
 
 management:
   endpoints:

@@ -11,6 +11,7 @@ kotlin = "1.6.10"
 jakarta = "3.0.2"
 hibernate = "5.4.32.Final"
 prometheus = "1.7.5"
+liquibase = "4.28.0"
 
 #plugins
 spring-dm = "1.0.11.RELEASE"
@@ -44,6 +45,7 @@ starter-actuator   = { module = "org.springframework.boot:spring-boot-starter-ac
 jackson-jsr310     = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"                        }
 jackson-kotlin     = { module = "com.fasterxml.jackson.module:jackson-module-kotlin"                            }
 jakarta-validation = { module = "jakarta.validation:jakarta.validation-api",     version.ref = "jakarta"        }
+liquibase-core     = { module = "org.liquibase:liquibase-core",                  version.ref = "liquibase"      }
 
 [plugins]
 kotlin-jvm                   = { id = "org.jetbrains.kotlin.jvm",                version.ref = "kotlin"         }

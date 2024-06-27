@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 private const val BCRYPT = "bcrypt"
 private const val NOOP = "noop"
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 open class AppConfig {
 
   @Bean
